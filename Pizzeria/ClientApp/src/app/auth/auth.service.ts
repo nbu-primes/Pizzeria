@@ -33,11 +33,15 @@ export class AuthService {
   }
 
   getToken(): string {
-    firebase.auth().currentUser.getIdToken()
-      .then(token => this.token = token)
-      .catch(error => console.log(error));
-
-    return this.token;
+    const currentUser = firebase.auth().currentUser;
+    if(currentUser){
+      currentUser.getIdToken()
+        .then(token => this.token = token)
+        .catch(error => console.log(error));
+      
+      return this.token;
+    }
+    return null;
   }
 
   isAuthenticated(): boolean {

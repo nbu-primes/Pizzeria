@@ -8,6 +8,7 @@ import {DataStorageService} from '../shared/data-storage.service';
 import {AuthGuardService} from '../auth/auth-guard.service';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {AuthInterceptor} from '../shared/auth.interceptor';
+import { AppConfigModule } from '../app-config.module';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import {AuthInterceptor} from '../shared/auth.interceptor';
   imports: [
     AppRoutingModule,
     SharedModule,
+    AppConfigModule
   ],
   exports: [
     AppRoutingModule,

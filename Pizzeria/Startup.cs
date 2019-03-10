@@ -34,7 +34,12 @@ namespace Pizzeria
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseCors(options =>
+            {
+                options.AllowAnyOrigin()
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+            });
             app.UseMvc();
         }
     }
