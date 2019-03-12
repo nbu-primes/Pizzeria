@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Pizzeria.Data;
 
 namespace Pizzeria.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190312174417_Ingredient_add_name")]
+    partial class Ingredient_add_name
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -62,13 +64,6 @@ namespace Pizzeria.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Ingredients");
-
-                    b.HasData(
-                        new { Id = new Guid("4822d030-b2da-4fdb-85e6-4559c2029eac"), Name = "Salami", Price = 5m },
-                        new { Id = new Guid("c50f4d0a-6cac-436e-b5c8-b0f5d9ca312d"), Name = "Tomato sauce", Price = 2m },
-                        new { Id = new Guid("ab8e13dc-a412-4959-b626-786105564735"), Name = "Cheese", Price = 2m },
-                        new { Id = new Guid("eb372a85-ff19-48a2-97de-2d888b664e93"), Name = "Mushrooms", Price = 2m }
-                    );
                 });
 
             modelBuilder.Entity("Pizzeria.Models.Order", b =>
@@ -152,11 +147,6 @@ namespace Pizzeria.Data.Migrations
                     b.HasIndex("OrderId");
 
                     b.ToTable("Recipes");
-
-                    b.HasData(
-                        new { Id = new Guid("f7453db5-628d-450f-97ce-ca1a5a1b9f0d"), Description = "Pepperoni", ImageUrl = "https://www.silviocicchi.com/pizzachef/wp-content/uploads/2015/02/p-evid1-672x372.jpg", IsTemplate = true, Price = 13.5, Weight = 1500.0 },
-                        new { Id = new Guid("62326247-6562-4584-83da-225b000376a6"), Description = "Mushroom pizza", ImageUrl = "https://d2814mmsvlryp1.cloudfront.net/wp-content/uploads/2017/03/WGC-mushroom-sheet-pan-pizza-1-copy-2.jpg", IsTemplate = true, Price = 11.99, Weight = 1300.0 }
-                    );
                 });
 
             modelBuilder.Entity("Pizzeria.Models.RecipeIngredient", b =>
@@ -170,13 +160,6 @@ namespace Pizzeria.Data.Migrations
                     b.HasIndex("RecipeId");
 
                     b.ToTable("RecipeIngredient");
-
-                    b.HasData(
-                        new { IngredientId = new Guid("4822d030-b2da-4fdb-85e6-4559c2029eac"), RecipeId = new Guid("f7453db5-628d-450f-97ce-ca1a5a1b9f0d") },
-                        new { IngredientId = new Guid("c50f4d0a-6cac-436e-b5c8-b0f5d9ca312d"), RecipeId = new Guid("f7453db5-628d-450f-97ce-ca1a5a1b9f0d") },
-                        new { IngredientId = new Guid("ab8e13dc-a412-4959-b626-786105564735"), RecipeId = new Guid("62326247-6562-4584-83da-225b000376a6") },
-                        new { IngredientId = new Guid("eb372a85-ff19-48a2-97de-2d888b664e93"), RecipeId = new Guid("62326247-6562-4584-83da-225b000376a6") }
-                    );
                 });
 
             modelBuilder.Entity("Pizzeria.Models.Role", b =>
