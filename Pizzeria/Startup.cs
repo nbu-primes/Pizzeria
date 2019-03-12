@@ -5,10 +5,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Pizzeria.Data;
 
 namespace Pizzeria
 {
@@ -25,6 +27,8 @@ namespace Pizzeria
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddDbContext<ApplicationDbContext>(options =>
+                         options.UseSqlServer(Configuration.GetConnectionString("PizzeriaDatabase")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
