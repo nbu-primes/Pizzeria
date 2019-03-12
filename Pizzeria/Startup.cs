@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Pizzeria.Data;
+using Pizzeria.DataServices;
 
 namespace Pizzeria
 {
@@ -29,6 +30,7 @@ namespace Pizzeria
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddDbContext<ApplicationDbContext>(options =>
                          options.UseSqlServer(Configuration.GetConnectionString("PizzeriaDatabase")));
+            services.AddCustomDataServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

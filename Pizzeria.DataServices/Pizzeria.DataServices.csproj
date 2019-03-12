@@ -4,4 +4,9 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Pizzeria.Data\Pizzeria.Data.csproj" />
+    <ProjectReference Include="..\Pizzeria.Models\Pizzeria.Models.csproj" />
+  </ItemGroup>
+
 </Project>
