@@ -15,7 +15,7 @@ namespace Pizzeria.Models
         }
 
         [Key]
-        public Guid Key { get; set; }
+        public Guid Id { get; set; }
 
         [Required]
         public string Description { get; set; }
@@ -31,5 +31,7 @@ namespace Pizzeria.Models
         public double Price { get; set; }
 
         public double Weight { get; set; }
+
+        public bool IsTemplate { get; set; }
     }
 }
