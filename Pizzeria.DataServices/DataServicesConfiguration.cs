@@ -11,6 +11,7 @@ namespace Pizzeria.DataServices
         public static void AddCustomDataServices(this IServiceCollection services)
         {
             services.AddScoped<IRecipeService, RecipeService>();
+            services.AddScoped<IUserService, UserService>();
         }
     }
 }

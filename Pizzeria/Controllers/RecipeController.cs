@@ -9,7 +9,8 @@ using System.Threading.Tasks;
 namespace Pizzeria.Api.Controllers
 {
     [Route("api/recipe")]
-    public class RecipeController
+    [ApiController]
+    public class RecipeController : ControllerBase
     {
         private readonly IRecipeService recipeService;
         public RecipeController(IRecipeService recipeService)
