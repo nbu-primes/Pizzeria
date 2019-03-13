@@ -16,7 +16,7 @@ namespace Pizzeria.Models.DTO
             this.Weight = r.Weight;
             this.IsTemplate = r.IsTemplate;
             this.Ingredients = r.RecipeIngredients
-                .Select(ri => new IngredientDto(ri.Ingredient.Name, ri.Ingredient.Price));
+                .Select(ri => new IngredientDto(ri.Ingredient));
         }
 
         public Guid Id { get; set; }

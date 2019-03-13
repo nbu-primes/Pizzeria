@@ -6,10 +6,10 @@ namespace Pizzeria.Models.DTO
 {
     public class IngredientDto
     {
-        public IngredientDto(string name, decimal price)
+        public IngredientDto(Ingredient i)
         {
-            this.Name = name ?? throw new ArgumentNullException("name");
-            this.Price = price;
+            this.Name = i.Name;
+            this.Price = i.Price;
         }
         public string Name { get; set; }
         public decimal Price { get; set; }
