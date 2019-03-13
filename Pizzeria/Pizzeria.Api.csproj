@@ -22,6 +22,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Pizzeria.DataServices\Pizzeria.DataServices.csproj" />
     <ProjectReference Include="..\Pizzeria.Data\Pizzeria.Data.csproj" />
+    <ProjectReference Include="..\Pizzeria.Services\Pizzeria.Services.csproj" />
   </ItemGroup>
 
 </Project>

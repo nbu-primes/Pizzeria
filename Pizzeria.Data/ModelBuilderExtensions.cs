@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Pizzeria.Models;
+using Pizzeria.Services;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -77,6 +78,71 @@ namespace Pizzeria.Data
             modelBuilder.Entity<RecipeIngredient>()
                 .HasData(recipeIngredients);
         }
+        public static void SeedUsers(this ModelBuilder modelBuilder)
+        {
+            var roles = new[]
+            {
+                new Role
+                {
+                    Id = new Guid("5127599a-e956-4f5e-9385-1b8c6a74e4f1"),
+                    RoleName = "Customer"
+                },
+                new Role
+                {
+                    Id = new Guid("8634c476-20fa-4391-b8f7-8713abf61af0"),
+                    RoleName = "Admin"
+                }
+            };
 
+            // customer password
+            byte[] customerPasswordHash = null;
+            byte[] customerPasswordSalt = null;
+            HashPassword("asd123", out customerPasswordHash, out customerPasswordSalt);
+
+            // admin password
+            byte[] adminPasswordHash = null;
+            byte[] adminPasswordSalt = null;
+            HashPassword("asd123", out adminPasswordHash, out adminPasswordSalt);
+            var users = new[]
+            {
+                new Users()
+                {
+                    Id = new Guid("3b86f5a2-1978-46e3-a0b6-edbb6b558efc"),
+                    FirstName = "John",
+                    LastName = "Doe",
+                    DepositedCash = 10000,
+                    Email = "john@doe.com",
+                    RoleId = roles[0].Id,
+                    PasswordHash = customerPasswordHash,
+                    PasswordSalt = customerPasswordSalt
+                },
+                new Users()
+                {
+                    Id = new Guid("c643b944-53d9-4a0c-9922-3486558b9129"),
+                    FirstName = "Admin",
+                    LastName = "Admin",
+                    DepositedCash = 10000,
+                    Email = "admin@admin.com",
+                    RoleId = roles[1].Id,
+                    PasswordHash = adminPasswordHash,
+                    PasswordSalt = adminPasswordSalt
+                }
+            };
+
+            modelBuilder.Entity<Role>()
+                .HasData(roles);
+
+            modelBuilder.Entity<Users>()
+                .HasData(users);
+        }
+
+        private static void HashPassword(string password, out byte[] passwordHash, out byte[] passwordSalt)
+        {
+            using (var hmac = new System.Security.Cryptography.HMACSHA512(Encoding.UTF8.GetBytes("GPSQZRH9ET0HSZOEJ27UVGUEA0GSZUL82NDN5URYRXP1WY004EPTA3K8DJZFV2EFV3A8VDAF8XXALUEVY1A2GI520A7OKISSO7PBAHOS9BE3JZ4PQPF79TRZ1WFVVV5L")))
+            {
+                passwordSalt = hmac.Key;
+                passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+            }
+        }
     }
 }

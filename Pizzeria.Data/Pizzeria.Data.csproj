@@ -5,12 +5,31 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20190313175619_test.cs" />
+    <Compile Remove="Migrations\20190313182100_Seed_Users.cs" />
+    <Compile Remove="Migrations\20190313182633_Seed_Users_With_Roles.cs" />
+    <Compile Remove="Migrations\20190313182802_test.cs" />
+    <Compile Remove="Migrations\20190313212319_Seed_Users_With_Roles.cs" />
+    <Compile Remove="Migrations\20190313212444_test.cs" />
+    <Compile Remove="Migrations\20190313212623_test2.cs" />
+    <Compile Remove="Migrations\20190313213504_Seed_Users_With_Roles.cs" />
+    <Compile Remove="Migrations\20190313213529_test.cs" />
+    <Compile Remove="Migrations\20190313214424_test.cs" />
+    <Compile Remove="Migrations\20190313214446_test2.cs" />
+    <Compile Remove="Migrations\20190313214600_test3.cs" />
+    <Compile Remove="Migrations\20190313215058_test4.cs" />
+    <Compile Remove="Migrations\20190313215740_Seed_Users_With_Roles.cs" />
+    <Compile Remove="Migrations\20190313215807_test.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.4" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Pizzeria.Models\Pizzeria.Models.csproj" />
+    <ProjectReference Include="..\Pizzeria.Services\Pizzeria.Services.csproj" />
   </ItemGroup>
 
 </Project>

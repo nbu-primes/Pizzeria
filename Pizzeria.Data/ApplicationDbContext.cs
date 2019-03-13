@@ -58,6 +58,7 @@ namespace Pizzeria.Data
                .HasForeignKey<OrderHistory>(h => h.OrderId);
 
             modelBuilder.SeedRecipes();
+            modelBuilder.SeedUsers();
 
             base.OnModelCreating(modelBuilder);
         }
