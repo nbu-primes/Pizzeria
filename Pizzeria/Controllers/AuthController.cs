@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Pizzeria.DataServices.Contracts;
+using Pizzeria.DataServices.CustomExceptions;
 using Pizzeria.Models.DTO;
 using Pizzeria.Services.Contracts;
 using System;
@@ -23,14 +24,14 @@ namespace Pizzeria.Api.Controllers
         }
 
         [HttpPost("login")]
-        public IActionResult Login([FromBody]LoginDto newUser)
+        public IActionResult Login([FromBody]LoginDto u)
         {
-            if (newUser == null)
+            if (u == null)
             {
                 return BadRequest("Invalid client request");
             }
 
-            var userDto = this.userService.Authenticate(newUser);
+            var userDto = this.userService.Authenticate(u);
 
             if (userDto == null)
             {
@@ -39,6 +40,28 @@ namespace Pizzeria.Api.Controllers
 
             string token = this.jwtAuthService.GenerateToken(userDto);
             return Ok(new { Token = token });
+        }
+
+        [HttpPost("register")]
+        public IActionResult Register([FromBody] RegisterDto newUser)
+        {
+            if (newUser == null)
+            {
+                return BadRequest("Invalid client request");
+            }
+            try
+            {
+                this.userService.Create(newUser);
+                return this.Ok();
+            }
+            catch (DuplicatedEmailException ex)
+            {
+                return new BadRequestObjectResult(ex);
+            }
+            catch (Exception ex)
+            {
+                return new BadRequestObjectResult(ex);
+            }
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Pizzeria.Data;
 using Pizzeria.DataServices.Contracts;
+using Pizzeria.DataServices.CustomExceptions;
 using Pizzeria.Models;
 using Pizzeria.Models.DTO;
 using Pizzeria.Services;
@@ -45,19 +46,18 @@ namespace Pizzeria.DataServices
             return new UserDto(user);
         }
 
-        public UserDto Create(UserDto userData, string password)
+        public UserDto Create(RegisterDto userData)
         {
             // validation
-            if (string.IsNullOrWhiteSpace(password))
+            if (userData == null)
                 throw new ArgumentNullException("Password is required");
 
             if (this.dbContext.Users.Any(x => x.Email == userData.Email))
-                throw new ArgumentException("Email \"" + userData.Email + "\" is already taken");
+                throw new DuplicatedEmailException("Email \"" + userData.Email + "\" is already taken");
 
             byte[] passwordHash, passwordSalt;
-            AuthUtils.CreatePasswordHash(password, out passwordHash, out passwordSalt);
-
-            string userRoleName = userData.Role ?? DefaultRole;
+            AuthUtils.CreatePasswordHash(userData.Password, out passwordHash, out passwordSalt);
+            
             Users user = new Users()
             {
                 Id = Guid.NewGuid(),
@@ -65,7 +65,7 @@ namespace Pizzeria.DataServices
                 FirstName = userData.FirstName,
                 LastName = userData.LastName,
                 DepositedCash = userData.DepositedCash,
-                Role = this.dbContext.Roles.Single(r => r.RoleName == userRoleName),
+                Role = this.dbContext.Roles.Single(r => r.RoleName == DefaultRole),
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt
             };

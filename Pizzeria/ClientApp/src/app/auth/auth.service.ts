@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { AppConfig, APP_CONFIG } from '../app-config.module';
 import { invalid } from '@angular/compiler/src/render3/view/util';
 import { Observable } from 'rxjs';
+import { RegisterUser } from './registerUser.model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,10 +19,10 @@ export class AuthService {
         console.log("initial jwt ", this.token);
   }
 
-  signupUser(email: string, password: string) {
-    console.log('registering ', email, password);
-    const url = `${this.config.apiEndpoint}/api/auth/login`;
-    this.httpClient.post(url, {email, password})
+  signupUser(userData: RegisterUser) {
+    console.log('registering ', userData);
+    const url = `${this.config.apiEndpoint}/api/auth/register`;
+    this.httpClient.post(url, userData)
       .subscribe((response) => {
           console.log(response);
       },(error) => console.log(error));

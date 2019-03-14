@@ -8,7 +8,6 @@ namespace Pizzeria.DataServices.Contracts
     public interface IUserService
     {
         UserDto Authenticate(LoginDto loginData);
-        UserDto Create(UserDto userData, string password);
-
+        UserDto Create(RegisterDto registerData);
     }
 }
