@@ -21,6 +21,9 @@
                required
                class="form-control">
       </div>
+      <p *ngIf="authService.invalidLogin" style="color:red" class="form-text text-muted">
+          Email or password are wrong !
+      </p>
       <button type="submit" class="btn btn-primary" [disabled]="f.invalid">Sign in</button>
     </form>
   </div>
