@@ -58,7 +58,7 @@ namespace Pizzeria.DataServices
             byte[] passwordHash, passwordSalt;
             AuthUtils.CreatePasswordHash(userData.Password, out passwordHash, out passwordSalt);
             
-            Users user = new Users()
+            User user = new User()
             {
                 Id = Guid.NewGuid(),
                 Email = userData.Email,

@@ -38,7 +38,7 @@ namespace Pizzeria.Models
         public OrderHistory OrderHistory { get; set; }
         public Guid OrderHistoryId { get; set; }
 
-        public Users User { get; set; }
+        public User User { get; set; }
         public Guid UserId { get; set; }
 
         public Caterer Caterer { get; set; }

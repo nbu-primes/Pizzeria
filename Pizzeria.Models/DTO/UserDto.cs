@@ -7,7 +7,7 @@ namespace Pizzeria.Models.DTO
 {
     public class UserDto
     {
-        public UserDto(Users u)
+        public UserDto(User u)
         {
             this.Id = u.Id;
             this.FirstName = u.FirstName;

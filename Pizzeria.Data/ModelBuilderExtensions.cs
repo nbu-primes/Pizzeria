@@ -105,7 +105,7 @@ namespace Pizzeria.Data
             HashPassword("asd123", out adminPasswordHash, out adminPasswordSalt);
             var users = new[]
             {
-                new Users()
+                new User()
                 {
                     Id = new Guid("3b86f5a2-1978-46e3-a0b6-edbb6b558efc"),
                     FirstName = "John",
@@ -116,7 +116,7 @@ namespace Pizzeria.Data
                     PasswordHash = customerPasswordHash,
                     PasswordSalt = customerPasswordSalt
                 },
-                new Users()
+                new User()
                 {
                     Id = new Guid("c643b944-53d9-4a0c-9922-3486558b9129"),
                     FirstName = "Admin",
@@ -132,7 +132,7 @@ namespace Pizzeria.Data
             modelBuilder.Entity<Role>()
                 .HasData(roles);
 
-            modelBuilder.Entity<Users>()
+            modelBuilder.Entity<User>()
                 .HasData(users);
         }
 

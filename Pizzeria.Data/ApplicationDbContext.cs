@@ -16,7 +16,7 @@ namespace Pizzeria.Data
 
         public DbSet<Additive> Additives { get; set; }
         public DbSet<Caterer> Caterers { get; set; }
-        public DbSet<Users> Users { get; set; }
+        public DbSet<User> Users { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderHistory> OrderHistory { get; set; }
@@ -56,6 +56,11 @@ namespace Pizzeria.Data
                .HasOne(o => o.OrderHistory)
                .WithOne(h => h.Order)
                .HasForeignKey<OrderHistory>(h => h.OrderId);
+
+            // unique email
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Email)
+                .IsUnique();
 
             modelBuilder.SeedRecipes();
             modelBuilder.SeedUsers();

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Pizzeria.Models
 {
-    public class Users
+    public class User
     {
         [Key]
         public Guid Id { get; set; }
