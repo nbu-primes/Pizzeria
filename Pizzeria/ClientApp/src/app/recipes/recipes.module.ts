@@ -24,6 +24,9 @@ import {SharedModule} from '../shared/shared.module';
     ReactiveFormsModule,
     RecipesRoutingModule,
     SharedModule
+  ],
+  exports:[
+    RecipeItemComponent
   ]
 })
 export class RecipesModule {

@@ -4,6 +4,7 @@ import {ShoppingListService} from '../../shopping-list/shopping-list.service';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {RecipeService} from '../recipe.service';
 import {Subscription} from 'rxjs';
+import { OrdersService } from 'src/app/order/order.service';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -18,7 +19,8 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   constructor(private shoppingListService: ShoppingListService,
               private recipeService: RecipeService,
               private router: Router,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private ordersService: OrdersService) {
   }
 
   ngOnInit() {
@@ -29,6 +31,11 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
         this.recipe = this.recipeService.getRecipe(this.index);
       });
 
+  }
+
+  addToOrdersList(): void{
+    console.log(this.recipe, ' added to orders list')
+    this.ordersService.addToOrder(this.recipe);
   }
 
   addToShoppingList(): void {
