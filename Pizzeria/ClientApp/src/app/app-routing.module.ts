@@ -8,8 +8,7 @@ import { RecipesComponent } from './recipes/recipes.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent, pathMatch: 'full'},
-  {path: 'shopping-list', component: ShoppingListComponent},
-  {path: 'orders', component: OrdersComponent},
+  {path: 'shopping-list', component: ShoppingListComponent}
 ];
 
 @NgModule({
