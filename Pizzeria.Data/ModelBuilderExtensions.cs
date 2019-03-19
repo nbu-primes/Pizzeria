@@ -19,7 +19,7 @@ namespace Pizzeria.Data
                         Description = "Pepperoni",
                         Price = 13.50d,
                         Weight = 1500,
-                        ImageUrl = "https://www.silviocicchi.com/pizzachef/wp-content/uploads/2015/02/p-evid1-672x372.jpg",
+                        ImagePath = "https://www.silviocicchi.com/pizzachef/wp-content/uploads/2015/02/p-evid1-672x372.jpg",
                         IsTemplate = true
                     },
                  new Recipe
@@ -28,7 +28,7 @@ namespace Pizzeria.Data
                      Description = "Mushroom pizza",
                      Price = 11.99d,
                      Weight = 1300,
-                     ImageUrl = "https://d2814mmsvlryp1.cloudfront.net/wp-content/uploads/2017/03/WGC-mushroom-sheet-pan-pizza-1-copy-2.jpg",
+                     ImagePath = "https://d2814mmsvlryp1.cloudfront.net/wp-content/uploads/2017/03/WGC-mushroom-sheet-pan-pizza-1-copy-2.jpg",
                      IsTemplate = true
                  }
             };

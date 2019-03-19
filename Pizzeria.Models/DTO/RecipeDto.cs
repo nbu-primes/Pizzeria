@@ -11,7 +11,7 @@ namespace Pizzeria.Models.DTO
         {
             this.Id = r.Id;
             this.Description = r.Description;
-            this.ImageUrl = r.ImageUrl;
+            this.ImagePath = r.ImagePath;
             this.Price = r.Price;
             this.Weight = r.Weight;
             this.IsTemplate = r.IsTemplate;
@@ -25,7 +25,7 @@ namespace Pizzeria.Models.DTO
 
         public IEnumerable<IngredientDto> Ingredients { get; set; }
 
-        public string ImageUrl { get; set; }
+        public string ImagePath { get; set; }
 
         public double Price { get; set; }
 

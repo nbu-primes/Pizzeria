@@ -26,7 +26,7 @@ namespace Pizzeria.Models
         }
 
         [Required]
-        public string ImageUrl { get; set; }
+        public string ImagePath { get; set; }
 
         public double Price { get; set; }
 
