@@ -17,7 +17,7 @@ export class HomeComponent implements OnInit {
 
   testApi(){
     this.httpClient
-          .get(`${this.config.apiEndpoint}/api/values`)
+          .get(`${this.config.apiEndpoint}/values`)
           .subscribe((result)=>{
             console.log(result);
           })

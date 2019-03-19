@@ -21,7 +21,7 @@ export class AuthService {
 
   signupUser(userData: RegisterUser) {
     console.log('registering ', userData);
-    const url = `${this.config.apiEndpoint}/api/auth/register`;
+    const url = `${this.config.apiEndpoint}/auth/register`;
     this.httpClient.post(url, userData)
       .subscribe((response) => {
           console.log(response);
@@ -29,7 +29,7 @@ export class AuthService {
   }
 
   signinUser(email: string, password: string){
-    const url = `${this.config.apiEndpoint}/api/auth/login`;
+    const url = `${this.config.apiEndpoint}/auth/login`;
     this.httpClient.post(url, {email, password})
         .subscribe((response: {token: string}) => {
             this.token = response.token;
@@ -49,7 +49,7 @@ export class AuthService {
     //   currentUser.getIdToken()
     //     .then(token => this.token = token)
     //     .catch(error => console.log(error));
-      
+
     //   return this.token;
     // }
     // return null;

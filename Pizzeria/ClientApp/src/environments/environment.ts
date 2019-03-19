@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiEndpoint: 'http://localhost:55846',
+  apiEndpoint: 'http://localhost:55846/api',
   jwtKey: 'jwtToken'
 };
 

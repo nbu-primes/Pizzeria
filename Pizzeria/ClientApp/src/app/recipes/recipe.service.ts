@@ -1,6 +1,9 @@
 import {Recipe} from './recipe.model';
 import {Ingredient} from '../shared/ingredient.model';
-import {Subject} from 'rxjs';
+import {Subject, Observable} from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Inject } from '@angular/core';
+import { APP_CONFIG, AppConfig } from '../app-config.module';
 
 export class RecipeService {
   recipeChanged = new Subject<Recipe[]>();
@@ -23,6 +26,11 @@ export class RecipeService {
     //     new Ingredient('carrots', 5)])
   ];
 
+  constructor(private httpClient: HttpClient,
+              @Inject(APP_CONFIG) private config: AppConfig) {
+
+  }
+
   addRecipe(recipe: Recipe) {
     this.recipes.push(recipe);
     this.notifyChange();
@@ -33,13 +41,13 @@ export class RecipeService {
     this.notifyChange();
   }
 
-  getRecipes(): Recipe[] {
+  getRecipes(): Observable<Recipe[]> {
     // return a copy of the array
-    return this.recipes.slice();
+    return this.httpClient.get<Recipe[]>(this.config.apiEndpoint + '/recipe');
   }
 
-  getRecipe(id: number): Recipe {
-    return this.recipes[id];
+  getRecipe(id: string): Observable<Recipe> {
+    return this.httpClient.get<Recipe>(this.config.apiEndpoint + '/recipe/' + id);
   }
 
   deleteRecipe(index: number) {
