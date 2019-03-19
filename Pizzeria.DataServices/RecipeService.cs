@@ -18,6 +18,17 @@ namespace Pizzeria.DataServices
             this.dbContext = dbContext ?? throw new ArgumentNullException("dbContext");
         }
 
+        public RecipeDto GetRecipe(Guid id)
+        {
+            var recipe = this.dbContext.Recipes
+                .Where(r => r.Id == id)
+                .Include(r => r.RecipeIngredients)
+                .ThenInclude(ri => ri.Ingredient)
+                .SingleOrDefault();
+
+            return new RecipeDto(recipe);
+        }
+
         public IEnumerable<RecipeDto> GetTemplateRecipes()
         {
             var templateRecipes = this.dbContext.Recipes

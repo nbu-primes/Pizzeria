@@ -8,5 +8,6 @@ namespace Pizzeria.DataServices.Contracts
     public interface IRecipeService
     {
         IEnumerable<RecipeDto> GetTemplateRecipes();
+        RecipeDto GetRecipe(Guid id);
     }
 }
