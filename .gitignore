@@ -55,3 +55,4 @@ packages/**
 *.resharper
 *.ncrunch*
 *.ndproj
+Pizzeria/ClientApp/.vscode/settings.json

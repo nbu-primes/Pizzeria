@@ -5,19 +5,23 @@ import { OrderListComponent } from './order-list/order-list.component';
 import { RecipesModule } from '../recipes/recipes.module';
 import { OrdersService } from './order.service';
 import { OrdersRoutingModule } from './order-routing.module';
+import { OrderDetailComponent } from './order-detail/order-detail.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
     declarations: [
         OrdersComponent,
-        OrderListComponent
+        OrderListComponent,
+        OrderDetailComponent
     ],
-    imports: [ 
+    imports: [
         CommonModule,
         OrdersRoutingModule,
-        RecipesModule
+        RecipesModule,
+        SharedModule
     ],
     providers:[OrdersService]
 })
 export class OrdersModule {
-    
+
 }
