@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, OnChanges } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 import { OrdersService } from '../order.service';
@@ -82,9 +82,6 @@ export class OrderEditComponent implements OnInit {
       });
 
     this.recipeForm = new FormGroup({
-      // 'name': new FormControl(recipeName, Validators.required),
-      // 'imagePath': new FormControl(imagePath, Validators.required),
-      // 'description': new FormControl(description, Validators.required),
       'ingredients': ingredients
     });
 

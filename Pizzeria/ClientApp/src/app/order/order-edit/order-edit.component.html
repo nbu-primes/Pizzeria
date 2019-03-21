@@ -12,50 +12,6 @@
           </button>
         </div>
       </div>
-      <!-- <div class="row">
-        <div class="col-xs-12">
-          <div class="form-group">
-            <label for="name">Name</label>
-            <input class="form-control"
-                   type="text"
-                   formControlName="name"
-                   #name
-                   id="name">
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="form-group">
-            <label for="imagePath">Image Path</label>
-            <input class="form-control"
-                   type="text"
-                   formControlName="imagePath"
-                   #imagePath
-                   id="imagePath">
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-12">
-          <img [src]="imagePath.value"
-               [alt]="name.value"
-               class="img-responsive">
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="form-group">
-            <label for="description">Description</label>
-            <textarea class="form-control"
-                      type="text"
-                      formControlName="description"
-                      rows="6"
-                      id="description">
-              </textarea>
-          </div>
-        </div>
-      </div> -->
       <div class="row">
         <div class="col-xs-12"
              formArrayName="ingredients">
@@ -64,17 +20,6 @@
             [formGroupName]="i"
             style="margin-top:10px"
             class="row">
-            <!-- <div class="col-xs-8">
-              <input formControlName="name"
-                     class="form-control"
-                     type="text"/>
-            </div> -->
-            <!-- <div class="col-xs-2">
-              <input formControlName="amount"
-                     class="form-control"
-                     type="number"/>
-            </div> -->
-
             <div class="col-xs-8">
                       <select class="form-control" formControlName="name">
                           <option *ngFor="let ai of allIngredients;let i=index"
