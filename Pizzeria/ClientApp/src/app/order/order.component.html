@@ -1,6 +1,11 @@
 <div class="row">
   <div class="col-md-5">
     <app-order-list></app-order-list>
+    <button style="margin: 10px 0 10px 0px; float: right"
+            (click)="finishOrder()"
+            class="btn btn-success">
+            Order
+    </button>
   </div>
   <div class="col-md-7">
     <router-outlet></router-outlet>

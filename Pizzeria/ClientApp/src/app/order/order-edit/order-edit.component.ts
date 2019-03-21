@@ -3,6 +3,7 @@ import {ActivatedRoute, Params, Router} from '@angular/router';
 import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 import { OrdersService } from '../order.service';
 import { Ingredient } from 'src/app/shared/ingredient.model';
+import { Recipe } from 'src/app/recipes/recipe.model';
 
 @Component({
   selector: 'app-order-edit',
@@ -10,8 +11,9 @@ import { Ingredient } from 'src/app/shared/ingredient.model';
   styleUrls: ['./order-edit.component.less']
 })
 export class OrderEditComponent implements OnInit {
-  id: number;
+  recipeEdit: Recipe;
   recipeForm: FormGroup;
+
   usedIngredients: Set<string>;
   allIngredients: Ingredient[] = [];
 
@@ -23,17 +25,20 @@ export class OrderEditComponent implements OnInit {
   ngOnInit() {
     this.usedIngredients = new Set<string>();
     this.allIngredients = this.orderService.getIngredients();
-
     this.route.params
-      .subscribe((params: Params) => {
-        this.id = +params['id'];
+    .subscribe((params: Params) => {
+        const id = +params['id'];
+        this.recipeEdit = this.orderService.getOrder(id);
+
         this.initForm();
       });
 
   }
 
   onSubmit() {
-    console.log("edit ", this.recipeForm.value);
+    const modifiedIngredients: Ingredient[] = this.recipeForm.value.ingredients;
+    this.recipeEdit.ingredients = modifiedIngredients;
+    console.log('modified recipe ', this.recipeEdit);
     // this.onCancel();
   }
 
@@ -65,14 +70,12 @@ export class OrderEditComponent implements OnInit {
     let imagePath = '';
     let description = '';
     const ingredients = new FormArray([]);
+    recipeName = this.recipeEdit.name;
+    imagePath = this.recipeEdit.imagePath;
+    description = this.recipeEdit.description;
 
-    const editRecipe = this.orderService.getOrder(this.id);
-    console.log(this.id, editRecipe);
-    recipeName = editRecipe.name;
-    imagePath = editRecipe.imagePath;
-    description = editRecipe.description;
-
-    editRecipe.ingredients
+    // copy ingredients from initial Recipe , to a editable form
+    this.recipeEdit.ingredients
       .forEach((ing) => {
         this.usedIngredients.add(ing.name);
         const ingGroup = new FormGroup({
@@ -92,7 +95,6 @@ export class OrderEditComponent implements OnInit {
           for (const i of control.ingredients) {
             this.usedIngredients.add(i.name);
           }
-          console.log('added ', this.usedIngredients);
         });
   }
 }

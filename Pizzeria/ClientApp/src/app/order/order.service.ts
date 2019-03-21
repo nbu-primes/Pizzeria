@@ -19,7 +19,6 @@ export class OrdersService {
       this.httpClient.get<Recipe[]>(this.config.apiEndpoint + '/recipe')
                         .subscribe(recipes => {
                             this.orderList = recipes;
-                            console.log('order lis filled ', this.orderList);
                             this.orderChanged.next(this.orderList);
                           });
     }
@@ -30,7 +29,8 @@ export class OrdersService {
 
     addToOrder(recipe: Recipe): void {
         if (recipe) {
-            this.orderList.push(recipe);
+            const deepCopy = JSON.parse(JSON.stringify(recipe));
+            this.orderList.push(deepCopy);
             this.notifyChange();
         }
     }
@@ -39,7 +39,6 @@ export class OrdersService {
       return this.httpClient.get<Ingredient[]>(this.config.apiEndpoint + '/ingredient')
                       .subscribe((ingredients: Ingredient[]) => {
                           this.ingredientsList = ingredients;
-                          console.log('ingredientsList loaded w/ ', ingredients);
                       });
     }
 

@@ -8,16 +8,22 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./order.component.less']
 })
 export class OrdersComponent implements OnInit, OnDestroy {
-
   sub: Subscription;
 
   constructor(private ordersService: OrdersService) { }
+
   ngOnInit() {
       this.sub = this.ordersService.loadIngredients();
   }
 
   ngOnDestroy() {
     this.sub.unsubscribe();
+  }
+
+  finishOrder() {
+    if(confirm('Are you sure you want to complete the Order ?')) {
+      console.log('finish order w/ these ', this.ordersService.orderList);
+    }
   }
 
 }
