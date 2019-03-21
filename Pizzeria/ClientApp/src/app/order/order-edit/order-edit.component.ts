@@ -1,37 +1,32 @@
 import { Component, OnInit, OnDestroy, OnChanges } from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
+import { OrdersService } from '../order.service';
+import { Ingredient } from 'src/app/shared/ingredient.model';
 
-import { Subscription } from 'rxjs';
-import { RecipeService } from 'src/app/recipes/recipe.service';
-import { Recipe } from 'src/app/recipes/recipe.model';
 @Component({
   selector: 'app-order-edit',
   templateUrl: './order-edit.component.html',
   styleUrls: ['./order-edit.component.less']
 })
-export class OrderEditComponent implements OnInit, OnDestroy {
-
-  recipeSub: Subscription;
-  id: string;
+export class OrderEditComponent implements OnInit {
+  id: number;
   recipeForm: FormGroup;
-  usedIngredients: Set<string> = new Set();
-  available: string[] = [
-    'Salad',
-    'Tomato sauce',
-    'Corn',
-    'Bacon'
-  ];
+  usedIngredients: Set<string>;
+  allIngredients: Ingredient[] = [];
 
   constructor(private route: ActivatedRoute,
               private router: Router,
-              private recipeService: RecipeService) {
+              private orderService: OrdersService) {
   }
 
   ngOnInit() {
+    this.usedIngredients = new Set<string>();
+    this.allIngredients = this.orderService.getIngredients();
+
     this.route.params
       .subscribe((params: Params) => {
-        this.id = params['id'];
+        this.id = +params['id'];
         this.initForm();
       });
 
@@ -71,21 +66,20 @@ export class OrderEditComponent implements OnInit, OnDestroy {
     let description = '';
     const ingredients = new FormArray([]);
 
-    this.recipeSub = this.recipeService.getRecipe(this.id)
-              .subscribe((editRecipe: Recipe) => {
-                console.log(this.id, editRecipe);
-                recipeName = editRecipe.name;
-                imagePath = editRecipe.imagePath;
-                description = editRecipe.description;
+    const editRecipe = this.orderService.getOrder(this.id);
+    console.log(this.id, editRecipe);
+    recipeName = editRecipe.name;
+    imagePath = editRecipe.imagePath;
+    description = editRecipe.description;
 
-                editRecipe.ingredients
-                  .forEach((ing) => {
-                    const ingGroup = new FormGroup({
-                      'name': new FormControl(ing.name, Validators.required)
-                    });
-                    ingredients.push(ingGroup);
-                  });
-              });
+    editRecipe.ingredients
+      .forEach((ing) => {
+        this.usedIngredients.add(ing.name);
+        const ingGroup = new FormGroup({
+          'name': new FormControl(ing.name, Validators.required)
+        });
+        ingredients.push(ingGroup);
+      });
 
     this.recipeForm = new FormGroup({
       // 'name': new FormControl(recipeName, Validators.required),
@@ -96,15 +90,12 @@ export class OrderEditComponent implements OnInit, OnDestroy {
 
     // should handle unsubscription by itself
     this.recipeForm.valueChanges
-        .subscribe((val) => {
-          console.log('changed ', val);
-          this.usedIngredients.add(val.name);
+        .subscribe((control) => {
+          this.usedIngredients.clear();
+          for (const i of control.ingredients) {
+            this.usedIngredients.add(i.name);
+          }
           console.log('added ', this.usedIngredients);
-
         });
-  }
-
-  ngOnDestroy() {
-    this.recipeSub.unsubscribe();
   }
 }

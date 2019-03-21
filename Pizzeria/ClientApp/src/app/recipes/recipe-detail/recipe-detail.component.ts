@@ -33,11 +33,10 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
     })).subscribe((recipe: Recipe) => {
             this.recipe = recipe;
             this.isLoaded = true;
-           console.log("recipe from nested ", recipe);
     });
   }
 
-  addToOrdersList(): void{
+  addToOrdersList(): void {
     console.log(this.recipe, ' added to orders list');
     this.ordersService.addToOrder(this.recipe);
   }
