@@ -70,7 +70,6 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
     if (this.editMode) {
       this.recipeSub = this.recipeService.getRecipe(this.id)
         .subscribe((editRecipe: Recipe) => {
-          console.log(this.id, editRecipe);
           recipeName = editRecipe.name;
           imagePath = editRecipe.imagePath;
           description = editRecipe.description;

@@ -37,7 +37,6 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   }
 
   addToOrdersList(): void {
-    console.log(this.recipe, ' added to orders list');
     this.ordersService.addToOrder(this.recipe);
   }
 

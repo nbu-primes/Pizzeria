@@ -36,7 +36,6 @@ export class OrderDetailComponent implements OnInit {
   }
 
   addToOrdersList(): void {
-    console.log(this.recipe, ' added to orders list');
     this.ordersService.addToOrder(this.recipe);
   }
 
