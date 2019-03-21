@@ -10,7 +10,10 @@ namespace Pizzeria.Models.DTO
         {
             this.Name = i.Name;
             this.Price = i.Price;
+            this.Id = i.Id;
         }
+
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public decimal Price { get; set; }
     }

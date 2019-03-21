@@ -29,5 +29,11 @@ namespace Pizzeria.Api.Controllers
         {
             return this.recipeService.GetRecipe(id);
         }
+
+        [HttpGet("~/api/ingredient")]
+        public IEnumerable<IngredientDto> GetAllIngredients()
+        {
+            return this.recipeService.GetAllIngredients();
+        }
     }
 }

@@ -79,8 +79,8 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
             .forEach((ing) => {
               const ingGroup = new FormGroup({
                 'name': new FormControl(ing.name, Validators.required),
-                'amount': new FormControl(ing.amount,
-                  [Validators.required, Validators.pattern(/^[1-9]+[0-9]*$/)])
+                // 'amount': new FormControl(ing.amount,
+                //   [Validators.required, Validators.pattern(/^[1-9]+[0-9]*$/)])
               });
               ingredients.push(ingGroup);
             });

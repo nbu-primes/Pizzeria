@@ -27,7 +27,7 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
         this.selectedIndex = index;
         this.ingForm.setValue({
           name: ingredient.name,
-          amount: ingredient.amount
+          // amount: ingredient.amount
         });
       });
   }

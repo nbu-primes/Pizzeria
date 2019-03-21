@@ -40,5 +40,13 @@ namespace Pizzeria.DataServices
 
             return templateRecipes;
         }
+
+        public IEnumerable<IngredientDto> GetAllIngredients()
+        {
+            var ingredients = this.dbContext.Ingredients
+                                .Select(i => new IngredientDto(i));
+
+            return ingredients;
+        }
     }
 }

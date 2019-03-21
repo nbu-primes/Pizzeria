@@ -9,5 +9,6 @@ namespace Pizzeria.DataServices.Contracts
     {
         IEnumerable<RecipeDto> GetTemplateRecipes();
         RecipeDto GetRecipe(Guid id);
+        IEnumerable<IngredientDto> GetAllIngredients();
     }
 }

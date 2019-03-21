@@ -1,22 +1,27 @@
 import { Recipe } from '../recipes/recipe.model';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Inject } from '@angular/core';
 import { APP_CONFIG, AppConfig } from '../app-config.module';
+import { Ingredient } from '../shared/ingredient.model';
 
 export class OrdersService {
     orderList: Recipe[] = [];
+    ingredientsList: Ingredient[] = [];
+
     orderChanged = new Subject<Recipe[]>();
+    httpSub: Subscription;
 
     constructor(private httpClient: HttpClient,
                 @Inject(APP_CONFIG) private config: AppConfig) {
 
-      // // prepopulate with all recipes for dev purposes
-      // this.httpClient.get<Recipe[]>(this.config.apiEndpoint + '/recipe')
-      //                .subscribe(recipes => {
-      //                  this.orderList = recipes;
-      //                  this.orderChanged.next(this.orderList);
-      //                 });
+      // prepopulate with all recipes for dev purposes
+      this.httpClient.get<Recipe[]>(this.config.apiEndpoint + '/recipe')
+                        .subscribe(recipes => {
+                            this.orderList = recipes;
+                            console.log('order lis filled ', this.orderList);
+                            this.orderChanged.next(this.orderList);
+                          });
     }
 
     getOrder(index: number): Recipe {
@@ -28,6 +33,18 @@ export class OrdersService {
             this.orderList.push(recipe);
             this.notifyChange();
         }
+    }
+
+    loadIngredients(): Subscription {
+      return this.httpClient.get<Ingredient[]>(this.config.apiEndpoint + '/ingredient')
+                      .subscribe((ingredients: Ingredient[]) => {
+                          this.ingredientsList = ingredients;
+                          console.log('ingredientsList loaded w/ ', ingredients);
+                      });
+    }
+
+    getIngredients(): Ingredient[] {
+      return this.ingredientsList.slice();
     }
 
     deleteFromOrder(index: number): void {
