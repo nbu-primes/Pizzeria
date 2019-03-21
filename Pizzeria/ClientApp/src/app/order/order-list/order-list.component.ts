@@ -9,19 +9,19 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./order-list.component.less']
 })
 export class OrderListComponent implements OnInit, OnDestroy {
-  
+
   orderedRecipes: Recipe[];
   orderChangedSub: Subscription;
-  
+
   constructor(private ordersService: OrdersService) { }
-  
+
   ngOnInit() {
     this.orderedRecipes = this.ordersService.getOrders();
 
     this.orderChangedSub = this.ordersService.orderChanged
         .subscribe((updatedOrders:Recipe[]) =>{
           this.orderedRecipes = updatedOrders;
-        })
+        });
   }
 
   ngOnDestroy(): void {

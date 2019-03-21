@@ -15,12 +15,11 @@ import { concatMap } from 'rxjs/operators';
 export class OrderDetailComponent implements OnInit {
 
   recipe: Recipe;
-  index: string;
+  index: number;
   subscription: Subscription;
   isLoaded: boolean;
 
   constructor(private shoppingListService: ShoppingListService,
-              private recipeService: RecipeService,
               private router: Router,
               private route: ActivatedRoute,
               private ordersService: OrdersService) {
@@ -28,14 +27,12 @@ export class OrderDetailComponent implements OnInit {
 
   ngOnInit() {
     this.subscription = this.route.params
-    .pipe(concatMap(params => {
-        this.index = params['id'];
-        return this.recipeService.getRecipe(this.index);
-    })).subscribe((recipe: Recipe) => {
-            this.recipe = recipe;
-            this.isLoaded = true;
-           console.log("recipe from nested ", recipe);
-    });
+      .subscribe(params => {
+          this.index = +params['id'];
+          const recipe = this.ordersService.getOrder(this.index);
+          this.recipe = recipe;
+          this.isLoaded = true;
+      });
   }
 
   addToOrdersList(): void {
@@ -44,7 +41,7 @@ export class OrderDetailComponent implements OnInit {
   }
 
   onOrderRemove(): void {
-    this.ordersService.deleteFromOrder(this.recipe.id);
+    this.ordersService.deleteFromOrder(this.index);
     this.router.navigate(['/orders']);
   }
 

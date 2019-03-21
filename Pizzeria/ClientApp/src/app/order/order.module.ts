@@ -7,17 +7,21 @@ import { OrdersService } from './order.service';
 import { OrdersRoutingModule } from './order-routing.module';
 import { OrderDetailComponent } from './order-detail/order-detail.component';
 import { SharedModule } from '../shared/shared.module';
+import { OrderEditComponent } from './order-edit/order-edit.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
     declarations: [
         OrdersComponent,
         OrderListComponent,
-        OrderDetailComponent
+        OrderDetailComponent,
+        OrderEditComponent
     ],
     imports: [
         CommonModule,
         OrdersRoutingModule,
         RecipesModule,
+        ReactiveFormsModule,
         SharedModule
     ],
     providers:[OrdersService]

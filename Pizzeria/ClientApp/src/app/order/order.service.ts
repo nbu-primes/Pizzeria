@@ -11,12 +11,16 @@ export class OrdersService {
     constructor(private httpClient: HttpClient,
                 @Inject(APP_CONFIG) private config: AppConfig) {
 
-      // prepopulate with all recipes for dev purposes
-      this.httpClient.get<Recipe[]>(this.config.apiEndpoint + '/recipe')
-                     .subscribe(recipes => {
-                       this.orderList = recipes;
-                       this.orderChanged.next(this.orderList);
-                      });
+      // // prepopulate with all recipes for dev purposes
+      // this.httpClient.get<Recipe[]>(this.config.apiEndpoint + '/recipe')
+      //                .subscribe(recipes => {
+      //                  this.orderList = recipes;
+      //                  this.orderChanged.next(this.orderList);
+      //                 });
+    }
+
+    getOrder(index: number): Recipe {
+        return this.orderList.slice()[index];
     }
 
     addToOrder(recipe: Recipe): void {
@@ -26,11 +30,9 @@ export class OrdersService {
         }
     }
 
-    deleteFromOrder(index: string): void {
-      if (index) {
-          this.orderList = this.orderList.filter(o => o.id !== index);
-          this.notifyChange();
-      }
+    deleteFromOrder(index: number): void {
+      this.orderList.splice(index, 1);
+      this.notifyChange();
     }
 
     getOrders(): Recipe[] {
