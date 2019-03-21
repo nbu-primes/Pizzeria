@@ -14,12 +14,4 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
   }
-
-  testApi(){
-    this.httpClient
-          .get(`${this.config.apiEndpoint}/values`)
-          .subscribe((result)=>{
-            console.log(result);
-          })
-  }
 }
