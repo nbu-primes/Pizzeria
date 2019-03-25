@@ -17,6 +17,16 @@ export class RecipeService {
   //   this.recipes.push(recipe);
   //   this.notifyChange();
   // }
+  totalPrice(recipe: Recipe): number {
+    if (!recipe) {
+      return -1;
+    }
+    let totalPrice = recipe.price;
+    for (const ingredient of recipe.ingredients) {
+      totalPrice += ingredient.price;
+    }
+    return totalPrice;
+  }
 
   getRecipes(): Observable<Recipe[]> {
     // return a copy of the array
