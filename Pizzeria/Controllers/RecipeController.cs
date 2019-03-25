@@ -23,7 +23,7 @@ namespace Pizzeria.Api.Controllers
         {
             return this.recipeService.GetTemplateRecipes();
         }
-
+        
         [HttpGet("{id:guid}")]
         public RecipeDto GetRecipe(Guid id)
         {

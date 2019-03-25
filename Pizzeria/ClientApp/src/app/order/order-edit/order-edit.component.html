@@ -25,7 +25,7 @@
                           <option *ngFor="let ai of allIngredients;let i=index"
                                 [attr.disabled] = "isIngredientUsed(ai.name) ? '' : null"
                                 [value]="ai.name">
-                                {{ai.name}}
+                                {{ai.name}} &nbsp; &nbsp;  {{ai.price | currency:'EUR'}}
                           </option>
                       </select>
             </div>

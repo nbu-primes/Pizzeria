@@ -4,6 +4,7 @@ import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 import { OrdersService } from '../order.service';
 import { Ingredient } from 'src/app/shared/ingredient.model';
 import { Recipe } from 'src/app/recipes/recipe.model';
+import { RecipeService } from 'src/app/recipes/recipe.service';
 
 @Component({
   selector: 'app-order-edit',
@@ -28,16 +29,15 @@ export class OrderEditComponent implements OnInit {
     this.route.params
     .subscribe((params: Params) => {
         const id = +params['id'];
+
+        // works with the reference
         this.recipeEdit = this.orderService.getOrder(id);
 
         this.initForm();
       });
-
   }
 
   onSubmit() {
-    const modifiedIngredients: Ingredient[] = this.recipeForm.value.ingredients;
-    this.recipeEdit.ingredients = modifiedIngredients;
     console.log('modified recipe ', this.recipeEdit);
     // this.onCancel();
   }
@@ -90,11 +90,19 @@ export class OrderEditComponent implements OnInit {
 
     // should handle unsubscription by itself
     this.recipeForm.valueChanges
-        .subscribe((control) => {
-          this.usedIngredients.clear();
-          for (const i of control.ingredients) {
-            this.usedIngredients.add(i.name);
-          }
-        });
+        .subscribe((control) => this.onValueChange(control));
+  }
+
+  private onValueChange(control: any) {
+    this.usedIngredients.clear();
+    this.recipeEdit.ingredients = [];
+    for (const i of control.ingredients) {
+      this.usedIngredients.add(i.name);
+      console.log('ingrdient from control ', i);
+      const ingredientInfo = (this.allIngredients.find(ing => ing.name === i.name));
+      if (ingredientInfo) {
+        this.recipeEdit.ingredients.push(ingredientInfo);
+      }
+    }
   }
 }

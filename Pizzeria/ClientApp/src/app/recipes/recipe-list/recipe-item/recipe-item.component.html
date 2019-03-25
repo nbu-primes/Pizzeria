@@ -8,7 +8,7 @@
     <p class="list-group-item-text">{{recipe.description}}</p>
   </div>
  <span class="pull-right">
-   <p style='margin-left:10px'>{{ recipe.price | currency:'EUR'}}</p>
+   <p style='margin-left:10px'>{{ recipeTotalPrice() | currency:'EUR'}}</p>
  </span>
   <span class="pull-right">
         <img
