@@ -21,7 +21,7 @@ namespace Pizzeria.Models
         public string Name { get; set; }
 
         [Range(0, int.MaxValue)]
-        public int Count { get; set; }
+        public int Price { get; set; }
 
         public ICollection<OrderAdditive> OrderAdditives { get => this.orderAdditives; set => this.orderAdditives = value; }
     }
