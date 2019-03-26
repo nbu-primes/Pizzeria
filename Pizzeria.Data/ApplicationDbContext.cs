@@ -64,6 +64,8 @@ namespace Pizzeria.Data
 
             modelBuilder.SeedRecipes();
             modelBuilder.SeedUsers();
+            modelBuilder.SeedCaterers();
+            modelBuilder.SeedAdditives();
 
             base.OnModelCreating(modelBuilder);
         }

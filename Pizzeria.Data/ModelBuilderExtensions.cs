@@ -144,5 +144,75 @@ namespace Pizzeria.Data
                 passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
             }
         }
+
+        public static void SeedCaterers(this ModelBuilder modelBuilder)
+        {
+            var Caterers = new[]
+            {
+                new Caterer
+                {
+                    Id = new Guid("b89ca9ab-ae08-4f34-8369-4397b47702d1"),
+                    Name = "Food Panda",
+                    IsAvailable = true
+                },
+                new Caterer
+                {
+                    Id = new Guid("d6c569f9-0df2-4c6e-967f-68a2684c22da"),
+                    Name = "Takeaway",
+                    IsAvailable = true
+                }
+            };
+
+            modelBuilder.Entity<Caterer>()
+                .HasData(Caterers);
+        }
+
+        public static void SeedAdditives(this ModelBuilder modelBuilder)
+        {
+            var Additives = new[]
+            {
+                new Additive
+                {
+                    Id = new Guid("38de00d4-a8a2-4586-8f39-a00ff5a8ba71"),
+                    Name = "Soda",
+                    Price = 1
+                },
+                new Additive
+                {
+                    Id = new Guid("69152cbc-8c3a-4444-9914-ab95a16b4485"),
+                    Name = "Coke",
+                    Price = 1
+                },
+                new Additive
+                {
+                    Id = new Guid("c11e6a87-11b3-4e64-9c9f-62a019622384"),
+                    Name = "French Fries",
+                    Price = 2
+                },
+                new Additive
+                {
+                    Id = new Guid("1524f795-ad1c-45cc-835a-f971a22735e9"),
+                    Name = "Hot Sauce",
+                    Price = 1
+                },
+                new Additive
+                {
+                    Id = new Guid("9c068dfe-120a-4bc8-8574-68211a277784"),
+                    Name = "Barbecue Sauce",
+                    Price = 1
+                },
+                new Additive
+                {
+                    Id = new Guid("20a5f42a-9585-4d55-a4fb-d73d27b34ffd"),
+                    Name = "Brownie",
+                    Price = 2
+                }
+            };
+
+            modelBuilder.Entity<Additive>()
+                .HasData(Additives);
+        }
+
     }
 }
+

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Pizzeria.Data;
 
 namespace Pizzeria.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190326150529_Replace_Additive_Count_With_Price")]
+    partial class Replace_Additive_Count_With_Price
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,15 +34,6 @@ namespace Pizzeria.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Additives");
-
-                    b.HasData(
-                        new { Id = new Guid("38de00d4-a8a2-4586-8f39-a00ff5a8ba71"), Name = "Soda", Price = 1 },
-                        new { Id = new Guid("69152cbc-8c3a-4444-9914-ab95a16b4485"), Name = "Coke", Price = 1 },
-                        new { Id = new Guid("c11e6a87-11b3-4e64-9c9f-62a019622384"), Name = "French Fries", Price = 2 },
-                        new { Id = new Guid("1524f795-ad1c-45cc-835a-f971a22735e9"), Name = "Hot Sauce", Price = 1 },
-                        new { Id = new Guid("9c068dfe-120a-4bc8-8574-68211a277784"), Name = "Barbecue Sauce", Price = 1 },
-                        new { Id = new Guid("20a5f42a-9585-4d55-a4fb-d73d27b34ffd"), Name = "Brownie", Price = 2 }
-                    );
                 });
 
             modelBuilder.Entity("Pizzeria.Models.Caterer", b =>
@@ -56,11 +49,6 @@ namespace Pizzeria.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Caterers");
-
-                    b.HasData(
-                        new { Id = new Guid("b89ca9ab-ae08-4f34-8369-4397b47702d1"), IsAvailable = true, Name = "Food Panda" },
-                        new { Id = new Guid("d6c569f9-0df2-4c6e-967f-68a2684c22da"), IsAvailable = true, Name = "Takeaway" }
-                    );
                 });
 
             modelBuilder.Entity("Pizzeria.Models.Ingredient", b =>
