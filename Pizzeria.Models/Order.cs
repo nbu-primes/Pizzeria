@@ -36,7 +36,6 @@ namespace Pizzeria.Models
         public decimal TotalPrice { get; set; }
 
         public OrderHistory OrderHistory { get; set; }
-        public Guid OrderHistoryId { get; set; }
 
         public User User { get; set; }
         public Guid UserId { get; set; }
