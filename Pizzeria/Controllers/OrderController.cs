@@ -15,7 +15,7 @@ namespace Pizzeria.Api.Controllers
             this.orderService = orderService ?? throw new ArgumentNullException(nameof(orderService));
         }
 
-        [HttpPost("place")]
+        [HttpPost]
         public IActionResult PlaceOrder([FromBody]OrderDto order)
         {
             var id = orderService.PlaceOrder(order);
