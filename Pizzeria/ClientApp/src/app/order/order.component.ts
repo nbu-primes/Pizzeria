@@ -1,3 +1,5 @@
+import { Caterer } from './models/caterer.model';
+import { Additive } from './models/additive.model';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { OrdersService } from './order.service';
 import { Subscription } from 'rxjs';
@@ -17,6 +19,8 @@ export class OrdersComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
       this.sub = this.ordersService.loadIngredients();
+      this.sub = this.ordersService.loadAdditives();
+      this.sub = this.ordersService.loadCaterers();
   }
 
   ngOnDestroy() {
@@ -50,6 +54,14 @@ export class OrdersComponent implements OnInit, OnDestroy {
     if(confirm('Are you sure you want to complete the Order ?')) {
       console.log('finish order w/ these ', this.ordersService.orderList);
     }
+  }
+
+  getAdditiveList(): Additive[]{
+    return this.ordersService.getAdditives();
+  }
+
+  getCatererList(): Caterer[]{
+    return this.ordersService.getCaterers();
   }
 
 }
