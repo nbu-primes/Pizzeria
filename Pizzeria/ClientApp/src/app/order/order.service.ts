@@ -53,7 +53,7 @@ export class OrdersService {
                         });
       }
 
-      loadCaterers(): Subscription {
+    loadCaterers(): Subscription {
         return this.httpClient.get<Caterer[]>(this.config.apiEndpoint + '/caterers')
                         .subscribe((caterers: Caterer[]) => {
                             this.catererList = caterers;
