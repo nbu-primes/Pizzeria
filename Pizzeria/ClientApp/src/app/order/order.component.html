@@ -10,6 +10,9 @@
           <label for="additives">
             Additives</label>
           <select class="form-control" id="AdditivesList">
+            <option selected>
+              None
+            </option>
             <option *ngFor="let additive of getAdditiveList()">
               {{additive.name}} | {{additive.price | currency:'EUR'}}
             </option>
