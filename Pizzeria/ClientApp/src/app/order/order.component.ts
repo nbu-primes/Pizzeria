@@ -12,19 +12,19 @@ import { RecipeService } from '../recipes/recipe.service';
   styleUrls: ['./order.component.less']
 })
 export class OrdersComponent implements OnInit, OnDestroy {
-  sub: Subscription;
+  sub: Subscription[] = [];
 
   constructor(private ordersService: OrdersService,
               private recipeService: RecipeService) { }
 
   ngOnInit() {
-      this.sub = this.ordersService.loadIngredients();
-      this.sub = this.ordersService.loadAdditives();
-      this.sub = this.ordersService.loadCaterers();
+      this.sub.push(this.ordersService.loadIngredients());
+      this.sub.push(this.ordersService.loadAdditives());
+      this.sub.push(this.ordersService.loadCaterers());
   }
 
   ngOnDestroy() {
-    this.sub.unsubscribe();
+    this.sub.forEach(s => s.unsubscribe());
   }
 
   getOrderList(): Recipe[] {
