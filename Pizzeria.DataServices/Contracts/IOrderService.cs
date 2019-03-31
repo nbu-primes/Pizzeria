@@ -5,6 +5,6 @@ namespace Pizzeria.DataServices.Contracts
 {
     public interface IOrderService
     {
-        Guid PlaceOrder(OrderDto order);
+        int PlaceOrder(OrderDto order, string userId);
     }
 }
