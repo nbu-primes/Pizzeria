@@ -22,6 +22,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         OrdersRoutingModule,
         RecipesModule,
         ReactiveFormsModule,
+        FormsModule,
         SharedModule
     ],
     providers:[OrdersService]
