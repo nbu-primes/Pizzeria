@@ -7,6 +7,10 @@ namespace Pizzeria.Models.DTO
 {
     public class RecipeDto
     {
+        public RecipeDto()
+        {
+            
+        }
         public RecipeDto(Recipe r)
         {
             this.Id = r.Id;

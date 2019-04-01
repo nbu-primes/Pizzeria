@@ -23,7 +23,6 @@ namespace Pizzeria.DataServices
             {
                 Address = orderDto.Address,
                 Caterer = dbContext.Caterers.FirstOrDefault(x => x.Id == orderDto.CatererId),
-                CatererId = orderDto.CatererId,
                 TotalPrice = orderDto.TotalPrice,
                 User = dbContext.Users.FirstOrDefault(x => x.Email.Equals(userId)),
                 

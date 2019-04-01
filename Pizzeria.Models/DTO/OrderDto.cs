@@ -10,6 +10,7 @@ namespace Pizzeria.Models.DTO
         public OrderDto()
         {
         }
+
         public OrderDto(Order o)
         {
             this.Id = o.Id;

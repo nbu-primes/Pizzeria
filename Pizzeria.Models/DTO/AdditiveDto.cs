@@ -4,6 +4,10 @@ namespace Pizzeria.Models.DTO
 {
     public class AdditiveDto
     {
+        public AdditiveDto()
+        {
+            
+        }
         public AdditiveDto(Additive a)
         {
             this.Id = a.Id;
