@@ -1,3 +1,5 @@
+import { Caterer } from './models/caterer.model';
+import { Additive } from './models/additive.model';
 import { Recipe } from '../recipes/recipe.model';
 import { Subject, Subscription } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
@@ -8,6 +10,8 @@ import { Ingredient } from '../shared/ingredient.model';
 export class OrdersService {
     orderList: Recipe[] = [];
     ingredientsList: Ingredient[] = [];
+    additiveList: Additive[] = [];
+    catererList: Caterer[] = [];
 
     orderChanged = new Subject<Recipe[]>();
     httpSub: Subscription;
@@ -42,6 +46,20 @@ export class OrdersService {
                       });
     }
 
+    loadAdditives(): Subscription {
+        return this.httpClient.get<Additive[]>(this.config.apiEndpoint + '/additives')
+                        .subscribe((additives: Additive[]) => {
+                            this.additiveList = additives;
+                        });
+      }
+
+    loadCaterers(): Subscription {
+        return this.httpClient.get<Caterer[]>(this.config.apiEndpoint + '/caterers')
+                        .subscribe((caterers: Caterer[]) => {
+                            this.catererList = caterers;
+                        });
+      }
+
     getIngredients(): Ingredient[] {
       return this.ingredientsList.slice();
     }
@@ -57,5 +75,13 @@ export class OrdersService {
 
     private notifyChange(): void {
         this.orderChanged.next(this.orderList.slice());
+    }
+
+    getAdditives(): Additive[]{
+        return this.additiveList;
+    }
+
+    getCaterers(): Caterer[]{
+        return this.catererList;
     }
 }

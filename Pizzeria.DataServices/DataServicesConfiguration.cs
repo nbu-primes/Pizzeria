@@ -13,6 +13,8 @@ namespace Pizzeria.DataServices
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IRecipeService, RecipeService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IAdditiveService, AdditiveService>();
+            services.AddScoped<ICatererService, CatererService>();
         }
     }
 }

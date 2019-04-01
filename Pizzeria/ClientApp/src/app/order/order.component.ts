@@ -1,3 +1,5 @@
+import { Caterer } from './models/caterer.model';
+import { Additive } from './models/additive.model';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { OrdersService } from './order.service';
 import { Subscription } from 'rxjs';
@@ -10,17 +12,19 @@ import { RecipeService } from '../recipes/recipe.service';
   styleUrls: ['./order.component.less']
 })
 export class OrdersComponent implements OnInit, OnDestroy {
-  sub: Subscription;
+  sub: Subscription[] = [];
 
   constructor(private ordersService: OrdersService,
               private recipeService: RecipeService) { }
 
   ngOnInit() {
-      this.sub = this.ordersService.loadIngredients();
+      this.sub.push(this.ordersService.loadIngredients());
+      this.sub.push(this.ordersService.loadAdditives());
+      this.sub.push(this.ordersService.loadCaterers());
   }
 
   ngOnDestroy() {
-    this.sub.unsubscribe();
+    this.sub.forEach(s => s.unsubscribe());
   }
 
   getOrderList(): Recipe[] {
@@ -50,6 +54,14 @@ export class OrdersComponent implements OnInit, OnDestroy {
     if(confirm('Are you sure you want to complete the Order ?')) {
       console.log('finish order w/ these ', this.ordersService.orderList);
     }
+  }
+
+  getAdditiveList(): Additive[]{
+    return this.ordersService.getAdditives();
+  }
+
+  getCatererList(): Caterer[]{
+    return this.ordersService.getCaterers();
   }
 
 }
