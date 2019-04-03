@@ -1,12 +1,12 @@
 <div class="row">
   <div class="col-md-6">
     <app-order-list></app-order-list>
-    
+
   </div>
   <div class="col-md-7">
     <router-outlet></router-outlet>
-    <form>
-        <div class="form-group">
+    <form [formGroup]="orderForm">
+        <!-- <div class="form-group">
           <label for="additives">
             Additives</label>
           <select class="form-control" id="AdditivesList">
@@ -17,12 +17,60 @@
               {{additive.name}} | {{additive.price | currency:'EUR'}}
             </option>
           </select>
+        </div> -->
+        <div class="row">
+          <div class="col-xs-12"
+               formArrayName="additives">
+            <div
+              *ngFor="let additive of getAdditiveControls(); let i = index"
+              [formGroupName]="i"
+              style="margin-top:10px"
+              class="row">
+              <label style='display: block; margin-left:15px'
+                      for="additives"
+                      class='text-muted'
+                      >Additive # {{i+1}}
+              </label>
+              <div class="col-xs-8">
+                  <div class="form-group">
+                    <div class="col-sm-8">
+                      <select class="form-control" formControlName="name">
+                        <option *ngFor="let a of getAllAdditives(); let i=index"
+                        [attr.disabled] = "false ? '' : null"
+                        [value]="a.name">
+                        {{a.name}} &nbsp; &nbsp;  {{a.price | currency:'EUR'}}
+                      </option>
+                    </select>
+                    </div>
+                    <div class="col-sm-4">
+                      <input class='form-control'
+                          formControlName='quantity'
+                          type="number">
+                    </div>
+
+                  </div>
+              </div>
+              <div class="col-xs-2">
+                  <button (click)="onDeleteAdditive(i)"
+                          class="btn btn-danger">X
+                  </button>
+                </div>
+            </div>
+          </div>
+          <hr>
+            <div class="col-xs-12">
+              <button type="button"
+                      (click)="onAddAdditive()"
+                      style='margin-top:10px'
+                      class="btn btn-success">Add Additive
+              </button>
+            </div>
         </div>
-    
+
         <div class="form-group">
           <label for="caterers">Caterers</label>
           <select class="form-control" id="CatererList">
-              <option *ngFor="let caterer of getCatererList()">
+              <option *ngFor="let caterer of getAllCaterers()">
                   {{caterer.name}}
                 </option>
           </select>
@@ -49,13 +97,23 @@
                   <span class='pizza-price text-muted'>{{recipeEdit.description}}: </span>
                   {{calculatePizzaPrice(recipeEdit) | currency:'EUR'}}
               </p>
-            </div>
-            <hr>
-            <div>
+          </div>
+          <hr>
+          <strong>
+            <p *ngIf="getOrderedAdditives().length > 0" class='text-muted'>Additives</p>
+          </strong>
+          <div *ngFor="let additive of getOrderedAdditives()">
               <p>
-                <span class='pizza-price text-dark'> <strong>Total:</strong> </span> {{calculateTotalPrice() | currency:'EUR'}}
+                  <span class='pizza-price text-muted'>{{additive.name}}: </span>
+                  {{additive.price | currency:'EUR'}}
               </p>
-            </div>
+          </div>
+          <hr>
+          <div>
+            <p>
+              <span class='pizza-price text-dark'> <strong>Total:</strong> </span> {{calculateTotalPrice() | currency:'EUR'}}
+            </p>
+          </div>
       </div>
     </div>
 

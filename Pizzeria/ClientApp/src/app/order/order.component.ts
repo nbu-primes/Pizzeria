@@ -5,6 +5,8 @@ import { OrdersService } from './order.service';
 import { Subscription } from 'rxjs';
 import { Recipe } from '../recipes/recipe.model';
 import { RecipeService } from '../recipes/recipe.service';
+import { FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
+import { Order } from './models/order.model';
 
 @Component({
   selector: 'app-order',
@@ -12,23 +14,37 @@ import { RecipeService } from '../recipes/recipe.service';
   styleUrls: ['./order.component.less']
 })
 export class OrdersComponent implements OnInit, OnDestroy {
-  sub: Subscription[] = [];
+  orderForm: FormGroup;
+
+  dataSub: Subscription[] = [];
+  formSub: Subscription;
 
   constructor(private ordersService: OrdersService,
               private recipeService: RecipeService) { }
 
   ngOnInit() {
-      this.sub.push(this.ordersService.loadIngredients());
-      this.sub.push(this.ordersService.loadAdditives());
-      this.sub.push(this.ordersService.loadCaterers());
+      this.initForm();
+
+      this.dataSub.push(this.ordersService.loadIngredients());
+      this.dataSub.push(this.ordersService.loadAdditives());
+      this.dataSub.push(this.ordersService.loadCaterers());
   }
 
   ngOnDestroy() {
-    this.sub.forEach(s => s.unsubscribe());
+    this.dataSub.forEach(s => s.unsubscribe());
+    this.formSub.unsubscribe();
   }
 
   getOrderList(): Recipe[] {
     return this.ordersService.getOrders();
+  }
+
+  getOrderedAdditives(): Additive[] {
+    return this.ordersService.order.orderAdditives.slice();
+  }
+
+  getAdditiveControls() {
+    return ((<FormArray>this.orderForm.get('additives')).controls);
   }
 
   calculatePizzaPrice(recipeEdit: Recipe): number {
@@ -39,29 +55,78 @@ export class OrdersComponent implements OnInit, OnDestroy {
   }
 
   calculateTotalPrice(): number {
-    let total = 0;
-    const orders: Recipe[] = this.getOrderList();
-    for (const order of orders) {
-      let orderTotal = order.ingredients.reduce((acc, curr) => {
-        return acc + curr.price;
-      }, order.price);
-      total += orderTotal;
+    const order: Order = this.ordersService.order;
+    let totalOrder = 0;
+    // calc recipes
+    for (const recipe of order.recipes) {
+      totalOrder += this.recipeService.totalPrice(recipe);
     }
-    return total;
+
+    const totalAdditives = order.orderAdditives.reduce((acc, curr) => {
+      return acc + curr.price;
+    }, 0);
+
+    totalOrder += totalAdditives;
+
+    return totalOrder;
   }
+
+
 
   finishOrder() {
     if (confirm('Are you sure you want to complete the Order ?')) {
-      console.log('finish order w/ these ', this.ordersService.order);
+
     }
   }
 
-  getAdditiveList(): Additive[]{
+  onAddAdditive() {
+    (<FormArray>this.orderForm.get('additives'))
+      .push(new FormGroup({
+        'name': new FormControl(null, Validators.required),
+        'quantity': new FormControl(1),
+      }));
+  }
+
+  onDeleteAdditive(index: number) {
+    (<FormArray>(this.orderForm.get('additives'))).removeAt(index);
+  }
+
+  getAllAdditives(): Additive[] {
     return this.ordersService.getAdditives();
   }
 
-  getCatererList(): Caterer[]{
+  getAllCaterers(): Caterer[]{
     return this.ordersService.getCaterers();
   }
 
+  private initForm() {
+    const formGroup = new FormGroup({
+      'name': new FormControl(),
+      'quantity': new FormControl(1)
+    });
+    const additives = new FormArray([formGroup]);
+    this.orderForm = new FormGroup({
+      'additives': additives
+    });
+
+    this.formSub = this.orderForm.valueChanges
+                  .subscribe(control => this.onValueChange(control));
+  }
+
+  private onValueChange(control: any): void {
+      const additives: Additive[] = [];
+
+      for (const a of control.additives) {
+        const foundAdd = this.getAllAdditives().find(el =>  el.name === a.name);
+        if (!foundAdd) {
+          continue;
+        }
+        // push it as many times as it was ordered
+        for (let i = 0; i < a.quantity; i++) {
+          additives.push(foundAdd);
+        }
+      }
+      // assign it to the order
+      this.ordersService.order.orderAdditives  = additives.slice();
+  }
 }

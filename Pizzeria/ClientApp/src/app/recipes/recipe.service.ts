@@ -13,18 +13,14 @@ export class RecipeService {
 
   }
 
-  // addRecipe(recipe: Recipe) {
-  //   this.recipes.push(recipe);
-  //   this.notifyChange();
-  // }
   totalPrice(recipe: Recipe): number {
     if (!recipe) {
-      return -1;
+      return 0;
     }
-    let totalPrice = recipe.price;
-    for (const ingredient of recipe.ingredients) {
-      totalPrice += ingredient.price;
-    }
+    const totalPrice = recipe.ingredients.reduce((acc, curr) => {
+      return acc + curr.price;
+    }, recipe.price);
+
     return totalPrice;
   }
 

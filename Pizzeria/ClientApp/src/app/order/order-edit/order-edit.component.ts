@@ -1,19 +1,22 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, OnDestroy} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 import { OrdersService } from '../order.service';
 import { Ingredient } from 'src/app/shared/ingredient.model';
 import { Recipe } from 'src/app/recipes/recipe.model';
 import { RecipeService } from 'src/app/recipes/recipe.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-order-edit',
   templateUrl: './order-edit.component.html',
   styleUrls: ['./order-edit.component.less']
 })
-export class OrderEditComponent implements OnInit {
+export class OrderEditComponent implements OnInit, OnDestroy {
   recipeEdit: Recipe;
   recipeForm: FormGroup;
+
+  formSub: Subscription;
 
   usedIngredients: Set<string>;
   allIngredients: Ingredient[] = [];
@@ -89,7 +92,7 @@ export class OrderEditComponent implements OnInit {
     });
 
     // should handle unsubscription by itself
-    this.recipeForm.valueChanges
+    this.formSub = this.recipeForm.valueChanges
         .subscribe((control) => this.onValueChange(control));
   }
 
@@ -104,5 +107,9 @@ export class OrderEditComponent implements OnInit {
         this.recipeEdit.ingredients.push(ingredientInfo);
       }
     }
+  }
+
+  ngOnDestroy(): void {
+    this.formSub.unsubscribe();
   }
 }
