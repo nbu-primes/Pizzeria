@@ -6,9 +6,10 @@ import { HttpClient } from '@angular/common/http';
 import { Inject } from '@angular/core';
 import { APP_CONFIG, AppConfig } from '../app-config.module';
 import { Ingredient } from '../shared/ingredient.model';
+import { Order } from './models/order.model';
 
 export class OrdersService {
-    orderList: Recipe[] = [];
+    order: Order = new Order();
     ingredientsList: Ingredient[] = [];
     additiveList: Additive[] = [];
     catererList: Caterer[] = [];
@@ -22,19 +23,19 @@ export class OrdersService {
       // prepopulate with all recipes for dev purposes
       this.httpClient.get<Recipe[]>(this.config.apiEndpoint + '/recipe')
                         .subscribe(recipes => {
-                            this.orderList = recipes;
-                            this.orderChanged.next(this.orderList);
+                            this.order.recipes = recipes;
+                            this.orderChanged.next(this.order.recipes);
                           });
     }
 
     getOrder(index: number): Recipe {
-        return this.orderList.slice()[index];
+        return this.order.recipes.slice()[index];
     }
 
     addToOrder(recipe: Recipe): void {
         if (recipe) {
             const deepCopy = JSON.parse(JSON.stringify(recipe));
-            this.orderList.push(deepCopy);
+            this.order.recipes.push(deepCopy);
             this.notifyChange();
         }
     }
@@ -65,23 +66,23 @@ export class OrdersService {
     }
 
     deleteFromOrder(index: number): void {
-      this.orderList.splice(index, 1);
+      this.order.recipes.splice(index, 1);
       this.notifyChange();
     }
 
     getOrders(): Recipe[] {
-        return this.orderList.slice();
+        return this.order.recipes.slice();
     }
 
     private notifyChange(): void {
-        this.orderChanged.next(this.orderList.slice());
+        this.orderChanged.next(this.order.recipes.slice());
     }
 
-    getAdditives(): Additive[]{
+    getAdditives(): Additive[] {
         return this.additiveList;
     }
 
-    getCaterers(): Caterer[]{
+    getCaterers(): Caterer[] {
         return this.catererList;
     }
 }

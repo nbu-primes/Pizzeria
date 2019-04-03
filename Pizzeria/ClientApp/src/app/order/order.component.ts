@@ -51,8 +51,8 @@ export class OrdersComponent implements OnInit, OnDestroy {
   }
 
   finishOrder() {
-    if(confirm('Are you sure you want to complete the Order ?')) {
-      console.log('finish order w/ these ', this.ordersService.orderList);
+    if (confirm('Are you sure you want to complete the Order ?')) {
+      console.log('finish order w/ these ', this.ordersService.order);
     }
   }
 

@@ -39,7 +39,7 @@ export class OrderEditComponent implements OnInit {
 
   onSubmit() {
     console.log('modified recipe ', this.recipeEdit);
-    // this.onCancel();
+    this.onCancel();
   }
 
   isIngredientUsed(ingredient: string): boolean {

@@ -19,7 +19,7 @@ export class OrderListComponent implements OnInit, OnDestroy {
     this.orderedRecipes = this.ordersService.getOrders();
 
     this.orderChangedSub = this.ordersService.orderChanged
-        .subscribe((updatedOrders: Recipe[]) =>{
+        .subscribe((updatedOrders: Recipe[]) => {
           this.orderedRecipes = updatedOrders;
         });
   }
