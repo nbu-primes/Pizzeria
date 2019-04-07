@@ -116,13 +116,12 @@ export class OrdersComponent implements OnInit, OnDestroy {
       const additives: Additive[] = [];
 
       for (const a of control.additives) {
-        const foundAdd = this.getAllAdditives().find(el =>  el.name === a.name);
-        if (!foundAdd) {
+        if (!a || !a.product || !a.product.name) {
           continue;
         }
         // push it as many times as it was ordered
         for (let i = 0; i < a.quantity; i++) {
-          additives.push(foundAdd);
+          additives.push(a.product);
         }
       }
       // assign it to the order

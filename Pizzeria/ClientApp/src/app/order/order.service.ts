@@ -8,7 +8,6 @@ import { APP_CONFIG, AppConfig } from '../app-config.module';
 import { Ingredient } from '../shared/ingredient.model';
 import { Order } from './models/order.model';
 import { RecipeService } from '../recipes/recipe.service';
-import { compileNgModule } from '@angular/core/src/render3/jit/module';
 
 export class OrdersService {
     order: Order = new Order();
