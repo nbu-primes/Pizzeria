@@ -6,6 +6,11 @@ namespace Pizzeria.Models.DTO
 {
     public class IngredientDto
     {
+        public IngredientDto()
+        {
+
+        }
+
         public IngredientDto(Ingredient i)
         {
             this.Name = i.Name;

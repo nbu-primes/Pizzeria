@@ -21,11 +21,12 @@ namespace Pizzeria.DataServices
 
             var order = new Order()
             {
+                Id = Guid.NewGuid(),
                 Address = orderDto.Address,
                 Caterer = dbContext.Caterers.FirstOrDefault(x => x.Id == orderDto.CatererId),
                 TotalPrice = orderDto.TotalPrice,
                 User = dbContext.Users.FirstOrDefault(x => x.Email.Equals(userId)),
-                
+
             };
 
             foreach (var orderAdditive in orderDto.OrderAdditives)
@@ -37,11 +38,22 @@ namespace Pizzeria.DataServices
             }
             foreach (var recipe in orderDto.Recipes)
             {
+                /*
+                     If the recipe is not a template (aka modified) it should be created as a new one
+		              - therefore assign it with a new ID
+                 */
+                Guid modifiedRecipeId = new Guid();
+                if (!recipe.IsTemplate)
+                {
+                    modifiedRecipeId = Guid.NewGuid();
+                    recipe.Id = modifiedRecipeId;
+                }
                 var newRecipe = dbContext.Recipes.FirstOrDefault(x => x.Id == recipe.Id);
                 if (newRecipe == null)
                 {
                     newRecipe = new Recipe()
                     {
+                        Id = modifiedRecipeId,
                         Description = recipe.Description,
                         ImagePath = recipe.ImagePath,
                         IsTemplate = recipe.IsTemplate,
@@ -57,7 +69,7 @@ namespace Pizzeria.DataServices
 
                         newRecipe.RecipeIngredients.Add(newRecipeIngredient);
                     }
-                    
+
                     //probably add the recipe if EF does not automatically
                     order.Recipes.Add(newRecipe);
                 }
@@ -67,7 +79,11 @@ namespace Pizzeria.DataServices
                 }
             }
 
-            var history = new OrderHistory {OrderStarted = DateTime.Now};
+            var history = new OrderHistory
+            {
+                Id = Guid.NewGuid(),
+                OrderStarted = DateTime.Now
+            };
             order.OrderHistory = history;
 
             dbContext.Orders.Add(order);

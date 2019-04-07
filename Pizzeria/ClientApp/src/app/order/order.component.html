@@ -6,18 +6,6 @@
   <div class="col-md-7">
     <router-outlet></router-outlet>
     <form [formGroup]="orderForm">
-        <!-- <div class="form-group">
-          <label for="additives">
-            Additives</label>
-          <select class="form-control" id="AdditivesList">
-            <option selected>
-              None
-            </option>
-            <option *ngFor="let additive of getAdditiveList()">
-              {{additive.name}} | {{additive.price | currency:'EUR'}}
-            </option>
-          </select>
-        </div> -->
         <div class="row">
           <div class="col-xs-12"
                formArrayName="additives">
@@ -34,10 +22,10 @@
               <div class="col-xs-8">
                   <div class="form-group">
                     <div class="col-sm-8">
-                      <select class="form-control" formControlName="name">
+                      <select class="form-control" formControlName="product">
                         <option *ngFor="let a of getAllAdditives(); let i=index"
                         [attr.disabled] = "false ? '' : null"
-                        [value]="a.name">
+                        [ngValue]="a">
                         {{a.name}} &nbsp; &nbsp;  {{a.price | currency:'EUR'}}
                       </option>
                     </select>
@@ -68,20 +56,29 @@
         </div>
 
         <div class="form-group">
-          <label for="caterers">Caterers</label>
-          <select class="form-control" id="CatererList">
-              <option *ngFor="let caterer of getAllCaterers()">
-                  {{caterer.name}}
+          <label for="caterer">Caterers</label>
+          <select class="form-control"
+              formControlName="caterer"
+              id="caterer">
+              <option
+                      *ngFor="let c of getAllCaterers();let i=index"
+                      [ngValue]="c"
+                      [selected]="i==0" >
+                  {{c.name}}
                 </option>
           </select>
         </div>
         <div class="form-group">
-          <label for="exampleFormControlTextarea1">Address</label>
-          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+          <label for="address">Address</label>
+          <textarea class="form-control"
+                    formControlName="address"
+                    id="address"
+                    rows="3"></textarea>
         </div>
         <div class="form-group">
           <button style="margin: 10px 0 10px 0px; float: right"
             (click)="finishOrder()"
+            [disabled]="orderForm.invalid"
             class="btn btn-success">
             Order
           </button>

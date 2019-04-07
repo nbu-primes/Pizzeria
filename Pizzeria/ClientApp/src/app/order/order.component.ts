@@ -1,12 +1,13 @@
 import { Caterer } from './models/caterer.model';
 import { Additive } from './models/additive.model';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { OrdersService } from './order.service';
 import { Subscription } from 'rxjs';
 import { Recipe } from '../recipes/recipe.model';
 import { RecipeService } from '../recipes/recipe.service';
 import { FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
-import { Order } from './models/order.model';
+import { HttpClient } from '@angular/common/http';
+import { APP_CONFIG, AppConfig } from '../app-config.module';
 
 @Component({
   selector: 'app-order',
@@ -20,7 +21,9 @@ export class OrdersComponent implements OnInit, OnDestroy {
   formSub: Subscription;
 
   constructor(private ordersService: OrdersService,
-              private recipeService: RecipeService) { }
+              private recipeService: RecipeService,
+              private httpClient: HttpClient,
+              @Inject(APP_CONFIG) private config: AppConfig) { }
 
   ngOnInit() {
       this.initForm();
@@ -49,32 +52,31 @@ export class OrdersComponent implements OnInit, OnDestroy {
 
   calculatePizzaPrice(recipeEdit: Recipe): number {
     if (!recipeEdit) {
-      return -1;
+      return 0;
     }
     return this.recipeService.totalPrice(recipeEdit);
   }
 
-  calculateTotalPrice(): number {
-    const order: Order = this.ordersService.order;
-    let totalOrder = 0;
-    // calc recipes
-    for (const recipe of order.recipes) {
-      totalOrder += this.recipeService.totalPrice(recipe);
-    }
-
-    const totalAdditives = order.orderAdditives.reduce((acc, curr) => {
-      return acc + curr.price;
-    }, 0);
-
-    totalOrder += totalAdditives;
-
-    return totalOrder;
+  calculateTotalPrice() {
+    return this.ordersService.calculateTotalPrice();
   }
-
 
 
   finishOrder() {
     if (confirm('Are you sure you want to complete the Order ?')) {
+        const finalOrder = this.ordersService.buildOrder(this.orderForm.value);
+
+        // send to server
+        this.httpClient.post(`${this.config.apiEndpoint}/order`, finalOrder)
+                .subscribe((response) => {
+                  console.log('order placed successfully ', response);
+                  alert('Order placed successfully');
+                }, (error) => {
+                  console.log('some error occured ', error);
+                });
+
+        // clear order
+        // redirect
 
     }
   }
@@ -82,7 +84,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
   onAddAdditive() {
     (<FormArray>this.orderForm.get('additives'))
       .push(new FormGroup({
-        'name': new FormControl(null, Validators.required),
+        'product': new FormControl(null, Validators.required),
         'quantity': new FormControl(1),
       }));
   }
@@ -95,18 +97,15 @@ export class OrdersComponent implements OnInit, OnDestroy {
     return this.ordersService.getAdditives();
   }
 
-  getAllCaterers(): Caterer[]{
+  getAllCaterers(): Caterer[] {
     return this.ordersService.getCaterers();
   }
 
   private initForm() {
-    const formGroup = new FormGroup({
-      'name': new FormControl(),
-      'quantity': new FormControl(1)
-    });
-    const additives = new FormArray([formGroup]);
     this.orderForm = new FormGroup({
-      'additives': additives
+      'caterer': new FormControl(null, Validators.required),
+      'address': new FormControl(null, Validators.required),
+      'additives': new FormArray([])
     });
 
     this.formSub = this.orderForm.valueChanges

@@ -7,6 +7,8 @@ import { Inject } from '@angular/core';
 import { APP_CONFIG, AppConfig } from '../app-config.module';
 import { Ingredient } from '../shared/ingredient.model';
 import { Order } from './models/order.model';
+import { RecipeService } from '../recipes/recipe.service';
+import { compileNgModule } from '@angular/core/src/render3/jit/module';
 
 export class OrdersService {
     order: Order = new Order();
@@ -18,6 +20,7 @@ export class OrdersService {
     httpSub: Subscription;
 
     constructor(private httpClient: HttpClient,
+                private recipeService: RecipeService,
                 @Inject(APP_CONFIG) private config: AppConfig) {
 
       // prepopulate with all recipes for dev purposes
@@ -52,14 +55,64 @@ export class OrdersService {
                         .subscribe((additives: Additive[]) => {
                             this.additiveList = additives;
                         });
-      }
+    }
 
     loadCaterers(): Subscription {
         return this.httpClient.get<Caterer[]>(this.config.apiEndpoint + '/caterers')
                         .subscribe((caterers: Caterer[]) => {
                             this.catererList = caterers;
                         });
+    }
+
+    calculateTotalPrice(): number {
+      let totalOrder = 0;
+      // calc recipes
+      for (const recipe of this.order.recipes) {
+        totalOrder += this.recipeService.totalPrice(recipe);
       }
+
+      const totalAdditives = this.order.orderAdditives.reduce((acc, curr) => {
+        return acc + curr.price;
+      }, 0);
+
+      totalOrder += totalAdditives;
+      return totalOrder;
+    }
+
+    buildOrder(orderForm: any): Order {
+      if (!orderForm) {
+        return null;
+      }
+
+      const finalOrder = JSON.parse(JSON.stringify(this.order));
+      console.log('order form ', orderForm);
+      finalOrder.catererId = orderForm.caterer.id;
+      finalOrder.address = orderForm.address;
+
+      // transform orderaddtivies , now they come as {product, quantity}
+      for (const orderedAddt of orderForm.additives) {
+        const addt = orderedAddt.product;
+        finalOrder.orderAdditives.push(addt);
+
+        // // don't duplicate them for now.
+        // const quantity = orderedAddt.quantity;
+        // if (!addt) {
+        //   continue;
+        // }
+        // for (let i = 0; i < quantity; i++) {
+        //   finalOrder.orderAdditives.push(addt);
+        // }
+      }
+
+      finalOrder.totalPrice = this.calculateTotalPrice();
+      finalOrder.recipes.map((el: Recipe) => {
+                                el.isTemplate = false;
+                                return el;
+                          });
+
+      console.log(finalOrder);
+      return finalOrder;
+    }
 
     getIngredients(): Ingredient[] {
       return this.ingredientsList.slice();
@@ -74,15 +127,15 @@ export class OrdersService {
         return this.order.recipes.slice();
     }
 
-    private notifyChange(): void {
-        this.orderChanged.next(this.order.recipes.slice());
-    }
-
     getAdditives(): Additive[] {
-        return this.additiveList;
+        return this.additiveList.slice();
     }
 
     getCaterers(): Caterer[] {
-        return this.catererList;
+        return this.catererList.slice();
     }
+
+    private notifyChange(): void {
+      this.orderChanged.next(this.order.recipes.slice());
+  }
 }
