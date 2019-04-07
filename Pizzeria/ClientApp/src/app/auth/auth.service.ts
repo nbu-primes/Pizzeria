@@ -43,16 +43,8 @@ export class AuthService {
   }
 
   getToken(): string {
-    return null;
-    // const currentUser = firebase.auth().currentUser;
-    // if(currentUser){
-    //   currentUser.getIdToken()
-    //     .then(token => this.token = token)
-    //     .catch(error => console.log(error));
-
-    //   return this.token;
-    // }
-    // return null;
+    const token = localStorage.getItem(this.config.jwtKey);
+    return token;
   }
 
   isAuthenticated(): boolean {
