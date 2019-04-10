@@ -29,11 +29,13 @@ namespace Pizzeria.DataServices
 
             };
 
-            foreach (var orderAdditive in orderDto.OrderAdditives)
+            foreach (var incomingOrderAddt in orderDto.OrderAdditivesPack)
             {
                 var newOrderAdditive = new OrderAdditive();
-                newOrderAdditive.Additive = dbContext.Additives.FirstOrDefault(x => x.Id == orderAdditive.Id);
+                newOrderAdditive.Additive = dbContext.Additives
+                        .FirstOrDefault(x => x.Id == incomingOrderAddt.Product.Id);
                 newOrderAdditive.Order = order;
+                newOrderAdditive.Count = incomingOrderAddt.Quantity;
                 order.OrderAdditives.Add(newOrderAdditive);
             }
             foreach (var recipe in orderDto.Recipes)
@@ -85,7 +87,7 @@ namespace Pizzeria.DataServices
                 OrderStarted = DateTime.Now
             };
             order.OrderHistory = history;
-
+            
             dbContext.Orders.Add(order);
             return dbContext.SaveChanges();
         }

@@ -23,12 +23,16 @@ namespace Pizzeria.Api.Controllers
             try
             {
                 var user = this.User.Claims.FirstOrDefault(x => x.Type == "Email")?.Value;
+                if (user == null)
+                {
+                    return this.Unauthorized();
+                }
                 var id = orderService.PlaceOrder(order, user);
                 return Ok(id);
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error on operating the request !");
             }
         }
     }
