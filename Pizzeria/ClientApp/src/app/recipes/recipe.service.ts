@@ -13,7 +13,7 @@ export class RecipeService {
 
   }
 
-  totalPrice(recipe: Recipe): number {
+  calculateRecipePrice(recipe: Recipe): number {
     if (!recipe) {
       return 0;
     }

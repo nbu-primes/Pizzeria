@@ -14,7 +14,7 @@ export class RecipeItemComponent {
   constructor(private recipeService: RecipeService){}
 
   recipeTotalPrice(): number {
-    const totalPrice = this.recipeService.totalPrice(this.recipe);
+    const totalPrice = this.recipeService.calculateRecipePrice(this.recipe);
     return totalPrice;
   }
 }

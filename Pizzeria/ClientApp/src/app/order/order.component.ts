@@ -8,6 +8,8 @@ import { RecipeService } from '../recipes/recipe.service';
 import { FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { APP_CONFIG, AppConfig } from '../app-config.module';
+import { Order } from './models/order.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-order',
@@ -23,6 +25,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
   constructor(private ordersService: OrdersService,
               private recipeService: RecipeService,
               private httpClient: HttpClient,
+              private router: Router,
               @Inject(APP_CONFIG) private config: AppConfig) { }
 
   ngOnInit() {
@@ -42,8 +45,8 @@ export class OrdersComponent implements OnInit, OnDestroy {
     return this.ordersService.getOrders();
   }
 
-  getOrderedAdditives(): Additive[] {
-    return this.ordersService.order.orderAdditives.slice();
+  getOrderedAdditives(): any[] {
+    return this.ordersService.order.orderAdditivesPack.slice();
   }
 
   getAdditiveControls() {
@@ -54,7 +57,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
     if (!recipeEdit) {
       return 0;
     }
-    return this.recipeService.totalPrice(recipeEdit);
+    return this.recipeService.calculateRecipePrice(recipeEdit);
   }
 
   calculateTotalPrice() {
@@ -69,15 +72,26 @@ export class OrdersComponent implements OnInit, OnDestroy {
         // send to server
         this.httpClient.post(`${this.config.apiEndpoint}/order`, finalOrder)
                 .subscribe((response) => {
-                  console.log('order placed successfully ', response);
+                  console.log("response: ", response);
                   alert('Order placed successfully');
+
+                  // clear order
+                  this.clearOrder();
+                  // redirect
+                  this.router.navigate(['/', 'recipes']);
+
                 }, (error) => {
-                  console.log('some error occured ', error);
+                  console.log('error: ', error);
+                  if (error.status === 401) {
+                    alert('User is unauthorized !');
+                  }
+                  else if (error.status === 500) {
+                    alert('Some error occured when we operated your order !');
+                  }
+                  else {
+                    alert('Some error occured !')
+                  }
                 });
-
-        // clear order
-        // redirect
-
     }
   }
 
@@ -101,6 +115,11 @@ export class OrdersComponent implements OnInit, OnDestroy {
     return this.ordersService.getCaterers();
   }
 
+  private clearOrder() {
+    this.orderForm.reset();
+    this.ordersService.order = new Order();
+  }
+
   private initForm() {
     this.orderForm = new FormGroup({
       'caterer': new FormControl(null, Validators.required),
@@ -113,18 +132,19 @@ export class OrdersComponent implements OnInit, OnDestroy {
   }
 
   private onValueChange(control: any): void {
-      const additives: Additive[] = [];
+      const additives = [];
 
       for (const a of control.additives) {
         if (!a || !a.product || !a.product.name) {
           continue;
         }
-        // push it as many times as it was ordered
-        for (let i = 0; i < a.quantity; i++) {
-          additives.push(a.product);
-        }
+        additives.push(a);
+        // // push it as many times as it was ordered
+        // for (let i = 0; i < a.quantity; i++) {
+        //   additives.push(a.product);
+        // }
       }
       // assign it to the order
-      this.ordersService.order.orderAdditives  = additives.slice();
+      this.ordersService.order.orderAdditivesPack = additives;
   }
 }

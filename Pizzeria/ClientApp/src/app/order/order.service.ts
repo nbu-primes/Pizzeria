@@ -11,6 +11,7 @@ import { RecipeService } from '../recipes/recipe.service';
 
 export class OrdersService {
     order: Order = new Order();
+
     ingredientsList: Ingredient[] = [];
     additiveList: Additive[] = [];
     catererList: Caterer[] = [];
@@ -65,14 +66,16 @@ export class OrdersService {
 
     calculateTotalPrice(): number {
       let totalOrder = 0;
-      // calc recipes
+      // calc recipes + ingredients
       for (const recipe of this.order.recipes) {
-        totalOrder += this.recipeService.totalPrice(recipe);
+        totalOrder += this.recipeService.calculateRecipePrice(recipe);
       }
 
-      const totalAdditives = this.order.orderAdditives.reduce((acc, curr) => {
-        return acc + curr.price;
-      }, 0);
+      // calc order additives
+      const totalAdditives = this.order.orderAdditivesPack
+                                      .reduce((acc, curr: any) => {
+                                        return acc + (curr.product.price * curr.quantity);
+                                      }, 0);
 
       totalOrder += totalAdditives;
       return totalOrder;
@@ -87,22 +90,6 @@ export class OrdersService {
       console.log('order form ', orderForm);
       finalOrder.catererId = orderForm.caterer.id;
       finalOrder.address = orderForm.address;
-
-      // transform orderaddtivies , now they come as {product, quantity}
-      for (const orderedAddt of orderForm.additives) {
-        const addt = orderedAddt.product;
-        finalOrder.orderAdditives.push(addt);
-
-        // // don't duplicate them for now.
-        // const quantity = orderedAddt.quantity;
-        // if (!addt) {
-        //   continue;
-        // }
-        // for (let i = 0; i < quantity; i++) {
-        //   finalOrder.orderAdditives.push(addt);
-        // }
-      }
-
       finalOrder.totalPrice = this.calculateTotalPrice();
       finalOrder.recipes.map((el: Recipe) => {
                                 el.isTemplate = false;

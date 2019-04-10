@@ -101,8 +101,8 @@
           </strong>
           <div *ngFor="let additive of getOrderedAdditives()">
               <p>
-                  <span class='pizza-price text-muted'>{{additive.name}}: </span>
-                  {{additive.price | currency:'EUR'}}
+                  <span class='pizza-price text-muted'>{{additive.product.name}} ({{additive.quantity}}): </span>
+                  {{(additive.product.price*additive.quantity) | currency:'EUR'}}
               </p>
           </div>
           <hr>
