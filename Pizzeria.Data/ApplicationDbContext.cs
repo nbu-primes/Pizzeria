@@ -30,7 +30,7 @@ namespace Pizzeria.Data
             // https://www.learnentityframeworkcore.com/configuration/many-to-many-relationship-configuration
 
             modelBuilder.Entity<OrderAdditive>()
-                .HasKey(m => new { m.OrderId, m.AdditiveId });
+                .HasKey(m => new { m.OrderId, m.AdditiveId, m.Count });
             modelBuilder.Entity<OrderAdditive>()
                 .HasOne(oa => oa.Additive)
                 .WithMany(a => a.OrderAdditives)

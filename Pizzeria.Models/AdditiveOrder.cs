@@ -12,5 +12,7 @@ namespace Pizzeria.Models
 
         public Additive Additive { get; set; }
         public Guid AdditiveId { get; set; }
+
+        public int Count { get; set; }
     }
 }
