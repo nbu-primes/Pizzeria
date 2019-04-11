@@ -12,10 +12,16 @@ export class AuthInterceptor implements HttpInterceptor {
               private router: Router) {
   }
 
+  whitelist: string[] = ['/recipes'];
+
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token = this.authService.getToken();
     if (this.jwtHelper.isTokenExpired(token)) {
-      this.authService.redirectToLogin();
+      const currentUrl: string = this.router.url;
+      const isPublic: boolean = this.whitelist.some(w => currentUrl.indexOf(w) === 0);
+      if(!isPublic) {
+        this.authService.redirectToLogin();
+      }
     }
     request = request.clone({
       setHeaders: {
