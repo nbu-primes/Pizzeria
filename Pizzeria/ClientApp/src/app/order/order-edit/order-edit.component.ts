@@ -110,6 +110,8 @@ export class OrderEditComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.formSub.unsubscribe();
+    if (this.formSub) {
+      this.formSub.unsubscribe();
+    }
   }
 }

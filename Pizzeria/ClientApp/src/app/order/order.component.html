@@ -33,6 +33,7 @@
                     <div class="col-sm-4">
                       <input class='form-control'
                           formControlName='quantity'
+                          min="0"
                           type="number">
                     </div>
 
@@ -91,7 +92,7 @@
       <div class="col-xs-12">
           <div *ngFor="let recipeEdit of getOrderList()">
               <p>
-                  <span class='pizza-price text-muted'>{{recipeEdit.description}}: </span>
+                  <span class='pizza-price text-muted'>{{recipeEdit.name}}: </span>
                   {{calculatePizzaPrice(recipeEdit) | currency:'EUR'}}
               </p>
           </div>
