@@ -66,9 +66,18 @@ export class AuthService {
     }
   }
 
-  logout() {
+  private removeToken() {
     localStorage.removeItem(this.config.jwtKey);
     this.token = null;
+  }
+
+  logout() {
+    this.removeToken();
     this.route.navigate(['/']);
+  }
+
+  redirectToLogin() {
+    this.removeToken();
+    this.route.navigate(['/signin']);
   }
 }

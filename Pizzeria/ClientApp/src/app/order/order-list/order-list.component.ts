@@ -25,6 +25,8 @@ export class OrderListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    if (this.orderChangedSub) {
       this.orderChangedSub.unsubscribe();
+    }
   }
 }
