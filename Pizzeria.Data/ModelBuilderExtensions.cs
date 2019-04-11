@@ -16,7 +16,8 @@ namespace Pizzeria.Data
                  new Recipe
                     {
                         Id = new Guid("f7453db5-628d-450f-97ce-ca1a5a1b9f0d"),
-                        Description = "Pepperoni",
+                        Name = "Pepperoni",
+                        Description = "A tasty Pepperoni",
                         Price = 13.50d,
                         Weight = 1500,
                         ImagePath = "https://www.silviocicchi.com/pizzachef/wp-content/uploads/2015/02/p-evid1-672x372.jpg",
@@ -25,7 +26,8 @@ namespace Pizzeria.Data
                  new Recipe
                  {
                      Id = new Guid("62326247-6562-4584-83da-225b000376a6"),
-                     Description = "Mushroom pizza",
+                     Name="Mushroom pizza",
+                     Description = "Pizza with fresh mushrooms",
                      Price = 11.99d,
                      Weight = 1300,
                      ImagePath = "https://d2814mmsvlryp1.cloudfront.net/wp-content/uploads/2017/03/WGC-mushroom-sheet-pan-pizza-1-copy-2.jpg",

@@ -57,9 +57,13 @@ namespace Pizzeria.Data
                .WithOne(h => h.Order)
                .HasForeignKey<OrderHistory>(h => h.OrderId);
 
-            // unique email
+            // unique - indexed columns
             modelBuilder.Entity<User>()
                 .HasIndex(u => u.Email)
+                .IsUnique();
+            
+            modelBuilder.Entity<Additive>()
+                .HasIndex(u => u.Name)
                 .IsUnique();
 
             modelBuilder.SeedRecipes();

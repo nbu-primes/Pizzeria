@@ -20,6 +20,11 @@
     <Compile Remove="Migrations\20190313215058_test4.cs" />
     <Compile Remove="Migrations\20190313215740_Seed_Users_With_Roles.cs" />
     <Compile Remove="Migrations\20190313215807_test.cs" />
+    <Compile Remove="Migrations\20190411154648_Add_Name_To_Recipe.cs" />
+    <Compile Remove="Migrations\20190411155019_Add_Name_To_Recipe.cs" />
+    <Compile Remove="Migrations\20190411155151_Add_Name_To_Recipe.cs" />
+    <Compile Remove="Migrations\20190411174830_Add_Name_To_Recipe.cs" />
+    <Compile Remove="Migrations\20190411175157_Add_Name_To_Recipe.cs" />
   </ItemGroup>
 
   <ItemGroup>
