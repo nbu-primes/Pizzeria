@@ -99,7 +99,8 @@ export class OrdersComponent implements OnInit, OnDestroy {
     (<FormArray>this.orderForm.get('additives'))
       .push(new FormGroup({
         'product': new FormControl(null, Validators.required),
-        'quantity': new FormControl(1),
+        'quantity': new FormControl(1,
+                    [Validators.required, Validators.pattern(/^\d*[1-9]\d*$/)]),
       }));
   }
 
