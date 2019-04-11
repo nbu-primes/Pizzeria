@@ -26,15 +26,6 @@
         <li *ngIf="isAuthenticated()">
           <a style="cursor: pointer" (click)="authService.logout()">Logout</a>
         </li>
-        <li *ngIf="isAuthenticated()" class="dropdown" appDropdown>
-          <a role="button" class="dropdown-toggle">
-            Manage <span class="caret"></span>
-          </a>
-          <ul class="dropdown-menu">
-            <li style="cursor: pointer"><a (click)="onSaveData()">Save Data</a></li>
-            <li style="cursor: pointer"><a (click)="onFetchData()">Fetch Data</a></li>
-          </ul>
-        </li>
       </ul>
     </div>
   </div>
