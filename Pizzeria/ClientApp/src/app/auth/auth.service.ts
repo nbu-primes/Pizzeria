@@ -35,10 +35,10 @@ export class AuthService {
             this.token = response.token;
             localStorage.setItem(this.config.jwtKey, this.token);
             this.invalidLogin = false;
-            this.route.navigate(['/']);
+            this.route.navigate(['/recipes']);
           },(error) => {
               this.invalidLogin = true;
-              console.log("error on signin ", error);
+              console.log('error on signin ', error);
         });
   }
 
