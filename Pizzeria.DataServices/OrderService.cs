@@ -60,7 +60,8 @@ namespace Pizzeria.DataServices
                         ImagePath = recipe.ImagePath,
                         IsTemplate = recipe.IsTemplate,
                         Price = recipe.Price,
-                        Weight = recipe.Weight
+                        Weight = recipe.Weight,
+                        Name = recipe.Name
                     };
                     foreach (var ingredient in recipe.Ingredients)
                     {
