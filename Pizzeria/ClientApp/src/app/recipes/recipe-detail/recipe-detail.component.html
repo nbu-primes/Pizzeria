@@ -1,5 +1,8 @@
 <div *ngIf="isLoaded">
   <div class="row">
+      <div class="col-xs-12">
+          <a [routerLink]="['..']" style="float:right" class="btn btn-danger">X</a>
+      </div>
     <div class="col-xs-12">
       <img [src]="recipe.imagePath"
           [alt]="recipe.name"

@@ -40,8 +40,10 @@ export class OrderDetailComponent implements OnInit {
   }
 
   onOrderRemove(): void {
-    this.ordersService.deleteFromOrder(this.index);
-    this.router.navigate(['/orders']);
+    if (confirm('Are you sure you want to remove the pizza from the Order ?')){
+      this.ordersService.deleteFromOrder(this.index);
+      this.router.navigate(['/orders']);
+    }
   }
 
   ngOnDestroy(): void {
