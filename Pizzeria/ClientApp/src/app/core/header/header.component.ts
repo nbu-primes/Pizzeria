@@ -20,4 +20,12 @@ export class HeaderComponent {
   isAuthenticated() {
     return this.authService.isAuthenticated();
   }
+
+  getUserName() {
+    if (this.authService.isAuthenticated() && this.authService.getUserInfo()) {
+      console.log(this.authService.getUserInfo());
+      return this.authService.getUserInfo()['FirstName'];
+    }
+    return null;
+  }
 }

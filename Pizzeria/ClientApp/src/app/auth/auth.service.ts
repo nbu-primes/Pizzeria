@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { AppConfig, APP_CONFIG } from '../app-config.module';
 import { RegisterUser } from './registerUser.model';
 import { JwtHelperService } from '@auth0/angular-jwt';
-
+import * as jwt_decode from 'jwt-decode';
 @Injectable({
   providedIn: 'root'
 })
@@ -47,6 +47,11 @@ export class AuthService {
     return token;
   }
 
+  getUserInfo(): any {
+    const decoded = jwt_decode(this.getToken());
+    return decoded;
+  }
+
   isTokenExpired(token: string): boolean {
       if (!token) {
         return false;
@@ -72,8 +77,10 @@ export class AuthService {
   }
 
   logout() {
-    this.removeToken();
-    this.route.navigate(['/']);
+    if (confirm('Are you sure you want to logout ?')){
+      this.removeToken();
+      this.route.navigate(['/']);
+    }
   }
 
   redirectToLogin() {

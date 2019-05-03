@@ -25,9 +25,14 @@
           <li><a routerLink="signup">Register</a></li>
           <li><a routerLink="signin">Login</a></li>
         </ng-template>
-        <li *ngIf="isAuthenticated()">
-          <a style="cursor: pointer" (click)="authService.logout()">Logout</a>
-        </li>
+        <ng-template [ngIf]="isAuthenticated()">
+          <li>
+            <a style="cursor:default" disabled="true">{{getUserName()}}</a>
+          </li>
+          <li>
+            <a style="cursor: pointer" (click)="authService.logout()">Logout</a>
+          </li>
+        </ng-template>
       </ul>
     </div>
   </div>
