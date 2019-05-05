@@ -34,6 +34,7 @@ namespace Pizzeria.Services
                 claims: new List<Claim>()
                 {
                         new Claim("Email", user.Email),
+                        new Claim("Id", user.Id.ToString()),
                         new Claim("FirstName", user.FirstName),
                         new Claim("Role", user.Role)
                 },

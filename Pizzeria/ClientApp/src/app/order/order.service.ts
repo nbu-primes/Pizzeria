@@ -1,13 +1,14 @@
 import { Caterer } from './models/caterer.model';
 import { Additive } from './models/additive.model';
 import { Recipe } from '../recipes/recipe.model';
-import { Subject, Subscription } from 'rxjs';
+import { Subject, Subscription, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Inject } from '@angular/core';
 import { APP_CONFIG, AppConfig } from '../app-config.module';
 import { Ingredient } from '../shared/ingredient.model';
 import { Order } from './models/order.model';
 import { RecipeService } from '../recipes/recipe.service';
+import { OrderHistory } from './models/order-history-model';
 
 export class OrdersService {
     order: Order = new Order();
@@ -29,6 +30,10 @@ export class OrdersService {
                             this.order.recipes = recipes;
                             this.orderChanged.next(this.order.recipes);
                           });
+    }
+
+    getUserOrders(userId: string): Observable<OrderHistory[]> {
+        return this.httpClient.get<OrderHistory[]>(this.config.apiEndpoint + '/userOrders/' + userId);
     }
 
     getOrder(index: number): Recipe {

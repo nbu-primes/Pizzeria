@@ -23,7 +23,6 @@ export class HeaderComponent {
 
   getUserName() {
     if (this.authService.isAuthenticated() && this.authService.getUserInfo()) {
-      console.log(this.authService.getUserInfo());
       return this.authService.getUserInfo()['FirstName'];
     }
     return null;

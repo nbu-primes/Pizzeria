@@ -4,8 +4,10 @@ import { OrdersComponent } from './order.component';
 import { OrderDetailComponent } from './order-detail/order-detail.component';
 import { OrderEditComponent } from './order-edit/order-edit.component';
 import { AuthGuardService } from '../auth/auth-guard.service';
+import { OrderHistoryComponent } from './order-history/order-history.component';
 
 const routes: Routes = [
+    {path: 'userOrders', component: OrderHistoryComponent, canActivate: [AuthGuardService]},
     {path: 'orders', component: OrdersComponent,
     canActivate: [AuthGuardService],
         children: [

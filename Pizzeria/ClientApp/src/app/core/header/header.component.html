@@ -27,7 +27,7 @@
         </ng-template>
         <ng-template [ngIf]="isAuthenticated()">
           <li>
-            <a style="cursor:default" disabled="true">{{getUserName()}}</a>
+            <a style="cursor:pointer" routerLink="/userOrders">{{getUserName()}}</a>
           </li>
           <li>
             <a style="cursor: pointer" (click)="authService.logout()">Logout</a>

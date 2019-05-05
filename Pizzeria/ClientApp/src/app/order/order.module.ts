@@ -9,13 +9,15 @@ import { OrderDetailComponent } from './order-detail/order-detail.component';
 import { SharedModule } from '../shared/shared.module';
 import { OrderEditComponent } from './order-edit/order-edit.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { OrderHistoryComponent } from './order-history/order-history.component';
 
 @NgModule({
     declarations: [
         OrdersComponent,
         OrderListComponent,
         OrderDetailComponent,
-        OrderEditComponent
+        OrderEditComponent,
+        OrderHistoryComponent
     ],
     imports: [
         CommonModule,
