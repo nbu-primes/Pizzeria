@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using Pizzeria.Data;
 using Pizzeria.DataServices.Contracts;
 using Pizzeria.Models;
@@ -88,9 +89,42 @@ namespace Pizzeria.DataServices
                 OrderStarted = DateTime.Now
             };
             order.OrderHistory = history;
-            
+
             dbContext.Orders.Add(order);
             return dbContext.SaveChanges();
+        }
+
+        public IEnumerable<UserOrderHistoryDto> UserOrders(Guid userId)
+        {
+            var orders = this.dbContext.Orders.Where(o => o.UserId == userId)
+                                .Include(x => x.OrderAdditives)
+                                .Select(o => new UserOrderHistoryDto()
+                                {
+                                    OrderId = o.Id,
+                                    OrderedAt = o.OrderHistory.OrderStarted,
+                                    Price = o.TotalPrice,
+                                    Caterer = o.Caterer.Name,
+                                    Additives = o.OrderAdditives.Select(oa => new UserOrderAdditive()
+                                    {
+                                        Name = oa.Additive.Name,
+                                        Price = oa.Additive.Price,
+                                        Count = oa.Count
+                                    }).ToList(),
+                                    Recipes = o.Recipes.Select(r => new RecipeDto()
+                                    {
+                                        Name = r.Name,
+                                        Description = r.Description,
+                                        Price = r.Price,
+                                        Ingredients = r.RecipeIngredients.Select(ri => new IngredientDto()
+                                        {
+                                            Name = ri.Ingredient.Name
+                                        }).ToList()
+                                    }).ToList()
+                                })
+                                .ToList();
+
+            return orders;
+
         }
     }
 }
