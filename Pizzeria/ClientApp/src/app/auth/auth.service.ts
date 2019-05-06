@@ -5,12 +5,14 @@ import { AppConfig, APP_CONFIG } from '../app-config.module';
 import { RegisterUser } from './registerUser.model';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import * as jwt_decode from 'jwt-decode';
+import { Subject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   token: string;
   invalidLogin: boolean;
+  onLogout = new Subject<void>();
   constructor(private route: Router,
               private httpClient: HttpClient,
               private jwtHelper: JwtHelperService,
@@ -80,6 +82,7 @@ export class AuthService {
     if (confirm('Are you sure you want to logout ?')){
       this.removeToken();
       this.route.navigate(['/']);
+      this.onLogout.next();
     }
   }
 

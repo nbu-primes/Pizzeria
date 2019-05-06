@@ -11,6 +11,7 @@ import { RecipeService } from '../recipes/recipe.service';
 import { OrderHistory } from './models/order-history-model';
 import { of } from 'rxjs';
 import { map, share } from 'rxjs/operators';
+import { AuthService } from '../auth/auth.service';
 
 export class OrdersService {
     order: Order = new Order();
@@ -23,11 +24,16 @@ export class OrdersService {
     userHistoryObservable: any;
 
     orderChanged = new Subject<Recipe[]>();
-    httpSub: Subscription;
 
     constructor(private httpClient: HttpClient,
                 private recipeService: RecipeService,
+                private authService: AuthService,
                 @Inject(APP_CONFIG) private config: AppConfig) {
+
+      this.authService.onLogout.subscribe(() => {
+        this.userOrderHistory = null;
+        this.userHistoryObservable = null;
+      });
 
       // prepopulate with all recipes for dev purposes
       this.httpClient.get<Recipe[]>(this.config.apiEndpoint + '/recipe')
