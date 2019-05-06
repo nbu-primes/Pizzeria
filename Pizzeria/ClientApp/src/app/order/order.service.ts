@@ -9,6 +9,8 @@ import { Ingredient } from '../shared/ingredient.model';
 import { Order } from './models/order.model';
 import { RecipeService } from '../recipes/recipe.service';
 import { OrderHistory } from './models/order-history-model';
+import { of } from 'rxjs';
+import { map, share } from 'rxjs/operators';
 
 export class OrdersService {
     order: Order = new Order();
@@ -16,6 +18,9 @@ export class OrdersService {
     ingredientsList: Ingredient[] = [];
     additiveList: Additive[] = [];
     catererList: Caterer[] = [];
+
+    userOrderHistory: OrderHistory[] = null;
+    userHistoryObservable: any;
 
     orderChanged = new Subject<Recipe[]>();
     httpSub: Subscription;
@@ -32,10 +37,6 @@ export class OrdersService {
                           });
     }
 
-    getUserOrders(userId: string): Observable<OrderHistory[]> {
-        return this.httpClient.get<OrderHistory[]>(this.config.apiEndpoint + '/userOrders/' + userId);
-    }
-
     getOrder(index: number): Recipe {
         return this.order.recipes.slice()[index];
     }
@@ -46,6 +47,30 @@ export class OrdersService {
             this.order.recipes.push(deepCopy);
             this.notifyChange();
         }
+    }
+
+    // cache data - https://blog.fullstacktraining.com/caching-http-requests-with-angular/
+    getUserOrderHistory(userId: string): Observable<OrderHistory[]> {
+      if (this.userOrderHistory) {
+        return of(this.userOrderHistory);
+      } else if (this.userHistoryObservable) {
+        return this.userHistoryObservable;
+      } else {
+        this.userHistoryObservable = this.httpClient
+                .get<OrderHistory[]>(this.config.apiEndpoint + '/userOrders/' + userId,
+                  {observe: 'response'})
+                .pipe(map(response => {
+                        this.userHistoryObservable = null;
+                        if (response.status === 400) {
+                          return 'Request failed.';
+                        } else if (response.status === 200) {
+                          this.userOrderHistory = response.body;
+                          return this.userOrderHistory;
+                        }
+                      }), share());
+
+        return this.userHistoryObservable;
+      }
     }
 
     loadIngredients(): Subscription {

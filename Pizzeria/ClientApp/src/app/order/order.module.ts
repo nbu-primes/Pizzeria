@@ -9,7 +9,10 @@ import { OrderDetailComponent } from './order-detail/order-detail.component';
 import { SharedModule } from '../shared/shared.module';
 import { OrderEditComponent } from './order-edit/order-edit.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { OrderHistoryDetailComponent } from './order-history/order-history-detail/order-history-detail.component';
 import { OrderHistoryComponent } from './order-history/order-history.component';
+import { OrderHistoryItemComponent } from './order-history/order-history-list/order-history-item/order-history-item.component';
+import { OrderHistoryListComponent } from './order-history/order-history-list/order-history-list.component';
 
 @NgModule({
     declarations: [
@@ -17,7 +20,10 @@ import { OrderHistoryComponent } from './order-history/order-history.component';
         OrderListComponent,
         OrderDetailComponent,
         OrderEditComponent,
-        OrderHistoryComponent
+        OrderHistoryListComponent,
+        OrderHistoryItemComponent,
+        OrderHistoryDetailComponent,
+        OrderHistoryComponent,
     ],
     imports: [
         CommonModule,

@@ -1,0 +1,8 @@
+<div>
+  <p *ngFor="let history of userHistoryList; let i = index;">
+      <app-order-history-item
+          [index]="i"
+          [history]="history">
+      </app-order-history-item>
+  </p>
+</div>
