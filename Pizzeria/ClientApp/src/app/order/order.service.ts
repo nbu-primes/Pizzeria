@@ -31,8 +31,7 @@ export class OrdersService {
                 @Inject(APP_CONFIG) private config: AppConfig) {
 
       this.authService.onLogout.subscribe(() => {
-        this.userOrderHistory = null;
-        this.userHistoryObservable = null;
+        this.clearUserHistoryCache();
       });
 
       // prepopulate with all recipes for dev purposes

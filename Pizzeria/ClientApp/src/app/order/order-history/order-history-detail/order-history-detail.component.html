@@ -1,26 +1,29 @@
-<p>
-  <strong>Order: </strong> {{orderHistory.orderId}}
-</p>
+<div *ngIf="orderHistory">
+    <p>
+        <strong>Order: </strong> {{orderHistory.orderId}}
+      </p>
 
-<!-- additives -->
+      <!-- additives -->
 
-<p><strong>Caterer</strong>: {{orderHistory.caterer}}</p>
-<p><strong>Price</strong>: {{orderHistory.price}}</p>
+      <p><strong>Caterer</strong>: {{orderHistory.caterer}}</p>
+      <p><strong>Price</strong>: {{orderHistory.price}}</p>
 
-<p>=============== Recipes ===============</p>
-<div class='order-history-section' *ngFor="let recipe of orderHistory.recipes;let i = index;">
-  <p>{{i + 1}}.</p>
-  <p><strong>Name</strong>: {{recipe.name}}</p>
-  <p><strong>Description</strong>: {{recipe.description}}</p>
-  <p><strong>Price</strong>: {{recipe.price | currency: 'EUR'}}</p>
-  <p>
-    <strong>Ingredients: </strong> {{getIngredients(recipe)}}
-  </p>
-  <p>-----------------------------------------------------</p>
-</div>
+      <p>=============== Recipes ===============</p>
+      <div class='order-history-section' *ngFor="let recipe of orderHistory.recipes;let i = index;">
+        <p>{{i + 1}}.</p>
+        <p><strong>Name</strong>: {{recipe.name}}</p>
+        <p><strong>Description</strong>: {{recipe.description}}</p>
+        <p><strong>Price</strong>: {{recipe.price | currency: 'EUR'}}</p>
+        <p>
+          <strong>Ingredients: </strong> {{getIngredients(recipe)}}
+        </p>
+        <p>-----------------------------------------------------</p>
+      </div>
 
 
-<p>=============== Additives =============== </p>
-<div class='order-history-section' *ngFor="let a of orderHistory.additives">
-  <p>{{a.name}} x{{a.count}}  ({{((+a.price) * (+a.count)) | currency: 'EUR'}})</p>
+      <p>=============== Additives =============== </p>
+      <div class='order-history-section' *ngFor="let a of orderHistory.additives">
+        <p>{{a.name}} x{{a.count}}  ({{((+a.price) * (+a.count)) | currency: 'EUR'}})</p>
+      </div>
+
 </div>

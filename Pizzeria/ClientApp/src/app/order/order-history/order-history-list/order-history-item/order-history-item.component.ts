@@ -16,7 +16,6 @@ export class OrderHistoryItemComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.history);
   }
 
   getOrderedTime(): String {
