@@ -4,33 +4,33 @@
       <a style="display: inline"
       routerLink="/"
       class="navbar-brand">
-        Recipe Book
+        Pizzeria™
       </a>
     </div>
 
     <div class="navbar-default">
       <ul class="nav navbar-nav">
         <li routerLinkActive="active">
-          <a [routerLink]="['recipes']">Recipes</a>
+          <a [routerLink]="['recipes']"><span class="glyphicon glyphicon-book"></span> Recipes</a>
         <!-- <li routerLinkActive="active">
           <a [routerLink]="['shopping-list']">Shopping List</a>
         </li> -->
         <li routerLinkActive="active">
-          <a [routerLink]="['orders']">Orders</a>
+          <a [routerLink]="['orders']"> <span class="glyphicon glyphicon-shopping-cart"></span> Orders</a>
         </li>
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
         <ng-template [ngIf]="!isAuthenticated()">
           <li><a routerLink="signup">Register</a></li>
-          <li><a routerLink="signin">Login</a></li>
+          <li><a routerLink="signin"> <span class="glyphicon glyphicon-log-in"></span> Login</a></li>
         </ng-template>
         <ng-template [ngIf]="isAuthenticated()">
           <li>
-            <a style="cursor:pointer" routerLink="/userOrders">{{getUserName()}}</a>
+            <a style="cursor:pointer" routerLink="/userOrders"> <span class="glyphicon glyphicon-user"></span> {{getUserName()}}</a>
           </li>
           <li>
-            <a style="cursor: pointer" (click)="authService.logout()">Logout</a>
+            <a style="cursor: pointer" (click)="authService.logout()"> <span class="glyphicon glyphicon-log-out"></span> Logout</a>
           </li>
         </ng-template>
       </ul>
