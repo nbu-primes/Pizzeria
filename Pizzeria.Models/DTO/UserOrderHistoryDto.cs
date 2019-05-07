@@ -18,7 +18,7 @@ namespace Pizzeria.Models.DTO
     public class UserOrderAdditive
     {
         public string Name { get; set; }
-        public double Price { get; set; }
+        public decimal Price { get; set; }
         public int Count { get; set; }
     }
 }
