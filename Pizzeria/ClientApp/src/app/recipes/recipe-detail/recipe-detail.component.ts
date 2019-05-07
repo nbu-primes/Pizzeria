@@ -46,7 +46,6 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
 
     if (confirm('Are you sure you want to add this pizza to the order list ?')) {
       this.ordersService.addToOrder(this.recipe);
-      alert(this.recipe.description + ' added to the Order list !');
     }
   }
 

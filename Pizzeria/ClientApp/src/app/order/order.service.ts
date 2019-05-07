@@ -35,11 +35,11 @@ export class OrdersService {
       });
 
       // prepopulate with all recipes for dev purposes
-      this.httpClient.get<Recipe[]>(this.config.apiEndpoint + '/recipe')
-                        .subscribe(recipes => {
-                            this.order.recipes = recipes;
-                            this.orderChanged.next(this.order.recipes);
-                          });
+      // this.httpClient.get<Recipe[]>(this.config.apiEndpoint + '/recipe')
+      //                   .subscribe(recipes => {
+      //                       this.order.recipes = recipes;
+      //                       this.orderChanged.next(this.order.recipes);
+      //                     });
     }
 
     getOrder(index: number): Recipe {

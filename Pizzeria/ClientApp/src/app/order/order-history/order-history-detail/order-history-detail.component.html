@@ -6,7 +6,7 @@
       <!-- additives -->
 
       <p><strong>Caterer</strong>: {{orderHistory.caterer}}</p>
-      <p><strong>Price</strong>: {{orderHistory.price}}</p>
+      <p><strong>Price</strong>: {{orderHistory.price | currency: 'EUR'}}</p>
 
       <p>=============== Recipes ===============</p>
       <div class='order-history-section' *ngFor="let recipe of orderHistory.recipes;let i = index;">
