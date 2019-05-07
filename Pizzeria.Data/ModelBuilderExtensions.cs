@@ -80,7 +80,7 @@ namespace Pizzeria.Data
                      Description = "Spread bases with pizza sauce and sprinkle with pizza cheese and blue cheese",
                      Price = 12.30d,
                      Weight = 1000,
-                     ImagePath = "https://static-communitytable.parade.com/wp-content/uploads/2017/01/IMG_5857-1.jpg",
+                     ImagePath = "https://www.thebittersideofsweet.com/wp-content/uploads/2016/09/IMG_5853-1.jpg",
                      IsTemplate = true
                  },
             };
@@ -302,37 +302,37 @@ namespace Pizzeria.Data
                 {
                     Id = new Guid("38de00d4-a8a2-4586-8f39-a00ff5a8ba71"),
                     Name = "Soda",
-                    Price = 1
+                    Price = 1.20m
                 },
                 new Additive
                 {
                     Id = new Guid("69152cbc-8c3a-4444-9914-ab95a16b4485"),
                     Name = "Coke",
-                    Price = 1
+                    Price = 1.50m
                 },
                 new Additive
                 {
                     Id = new Guid("c11e6a87-11b3-4e64-9c9f-62a019622384"),
                     Name = "French Fries",
-                    Price = 2
+                    Price = 2.20m
                 },
                 new Additive
                 {
                     Id = new Guid("1524f795-ad1c-45cc-835a-f971a22735e9"),
                     Name = "Hot Sauce",
-                    Price = 1
+                    Price = 0.99m
                 },
                 new Additive
                 {
                     Id = new Guid("9c068dfe-120a-4bc8-8574-68211a277784"),
                     Name = "Barbecue Sauce",
-                    Price = 1
+                    Price = 0.99m
                 },
                 new Additive
                 {
                     Id = new Guid("20a5f42a-9585-4d55-a4fb-d73d27b34ffd"),
                     Name = "Brownie",
-                    Price = 2
+                    Price = 2.80m
                 }
             };
 
