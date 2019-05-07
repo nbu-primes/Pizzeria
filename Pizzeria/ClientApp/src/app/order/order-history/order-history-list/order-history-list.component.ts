@@ -21,8 +21,9 @@ export class OrderHistoryListComponent implements OnInit, OnDestroy {
     if (!this.authService.isAuthenticated()) {
       return;
     }
+    this.orderService.clearUserHistoryCache();
     const index = this.authService.getUserInfo()['Id'];
-    this.httpSub = this.orderService.getUserOrderHistory(index)
+    this.httpSub = this.orderService.getCachedUserOrderHistory(index)
                     .subscribe((userOrders: OrderHistory[]) => {
                       this.userHistoryList = userOrders;
                     });

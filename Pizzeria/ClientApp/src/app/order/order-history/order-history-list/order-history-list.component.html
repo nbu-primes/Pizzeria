@@ -1,8 +1,15 @@
-<div>
-  <p *ngFor="let history of userHistoryList; let i = index;">
-      <app-order-history-item
-          [index]="i"
-          [history]="history">
-      </app-order-history-item>
-  </p>
-</div>
+<div *ngIf="userHistoryList && userHistoryList.length === 0" class="row">
+    <div class="col-xs-12">
+      <h4 class="text-muted"> You didn't make any orders in the past yet ! </h4>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12">
+        <app-order-history-item *ngFor="let history of userHistoryList; let i = index;"
+              [index]="i"
+              [history]="history">
+    </app-order-history-item>
+    </div>
+  </div>
+

@@ -98,6 +98,7 @@ namespace Pizzeria.DataServices
         {
             var orders = this.dbContext.Orders.Where(o => o.UserId == userId)
                                 .Include(x => x.OrderAdditives)
+                                .OrderBy(o => o.OrderHistory.OrderStarted)
                                 .Select(o => new UserOrderHistoryDto()
                                 {
                                     OrderId = o.Id,

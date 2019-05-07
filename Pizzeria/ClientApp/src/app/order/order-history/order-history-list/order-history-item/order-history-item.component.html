@@ -1,3 +1,17 @@
-<a [routerLink]="[index]">
-  Item {{history.orderId}}
+<a
+  style="cursor: pointer"
+  [routerLink]="[index]"
+  routerLinkActive="active"
+  class="list-group-item clearfix">
+  <div class="row">
+    <h4 style="padding: 5px" class="list-group-item-heading">Order: {{history.orderId}}</h4>
+  </div>
+  <div class="row">
+    <p style="padding: 5px" class="list-group-item-text text-muted pull-right"> <span style="font-style: italic">ordered at</span> {{getOrderedTime()}}</p>
+  </div>
+  <div class="row">
+    <div style="padding: 5px" class=" pull-right">
+      <p>{{ history.price | currency:'EUR'}}</p>
+    </div>
+  </div>
 </a>

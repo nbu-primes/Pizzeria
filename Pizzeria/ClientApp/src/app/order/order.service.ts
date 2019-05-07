@@ -56,7 +56,7 @@ export class OrdersService {
     }
 
     // cache data - https://blog.fullstacktraining.com/caching-http-requests-with-angular/
-    getUserOrderHistory(userId: string): Observable<OrderHistory[]> {
+    getCachedUserOrderHistory(userId: string): Observable<OrderHistory[]> {
       if (this.userOrderHistory) {
         return of(this.userOrderHistory);
       } else if (this.userHistoryObservable) {
@@ -77,6 +77,11 @@ export class OrdersService {
 
         return this.userHistoryObservable;
       }
+    }
+
+    clearUserHistoryCache() {
+      this.userHistoryObservable = null;
+      this.userOrderHistory = null;
     }
 
     loadIngredients(): Subscription {
